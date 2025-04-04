@@ -48,12 +48,12 @@ Seminar nhóm:
 <a name="doan"></a>
 Đồ án Nhóm: Hệ thống quản lý nhà thuốc.
 
-Lý do chọn đề tài:
-Trong thời đại công nghệ phát triển mạnh mẽ, việc ứng dụng phần mềm vào quản lý nhà thuốc đã trở thành một nhu cầu thiết yếu. Một hệ thống quản lý nhà thuốc không chỉ giúp theo dõi quá trình mua bán dược phẩm mà còn hỗ trợ kiểm soát tồn kho, quản lý khách hàng, nhân viên, nhà cung cấp, hãng sản xuất một cách khoa học và chính xác, góp phần nâng cao chất lượng dịch vụ và tối ưu hiệu quả kinh doanh.
+**Lý do chọn đề tài:**
 
 Nhà thuốc là nơi cung cấp các loại dược phẩm phục vụ nhu cầu chăm sóc sức khỏe cho cộng đồng. Tuy nhiên, việc quản lý thủ công bằng sổ sách hoặc file Excel dễ dẫn đến sai sót, thất thoát hàng hóa, mất nhiều thời gian và công sức. Đặc biệt, với số lượng lớn các loại thuốc có thông tin chi tiết về thành phần, hạn sử dụng, nhà sản xuất, giá bán… việc quản lý không chính xác có thể ảnh hưởng trực tiếp đến hiệu quả kinh doanh và an toàn cho người sử dụng. Thấy được những khó khăn, nhóm chúng em đã chọn đề tài “Xây dựng hệ thống quản lý nhà thuốc” với mục tiêu tạo ra một hệ thống đơn giản và hiệu quả.
 
-Mô tả bài toán:
+**Mô tả bài toán:**
+
 Hệ thống quản lý nhà thuốc bao gồm nhiều thành phần quan trọng nhằm đảm bảo hoạt động trơn tru và hiệu quả. Trước tiên là quản lý nhân viên, giúp nhà thuốc lưu trữ thông tin của từng nhân viên như họ tên, số căn cước công dân, số điện thoại, vị trí công việc để thuận tiện cho việc phân quyền và giám sát. Nhân viên có thể đảm nhiệm các vai trò như bán hàng, kiểm kê kho hoặc quản lý hoạt động nhà thuốc.
 
 Tiếp theo là quản lý khách hàng, cho phép theo dõi thông tin của khách hàng, bao gồm cả khách lẻ và khách hàng thân thiết. Hệ thống cũng giúp nâng cao trải nghiệm khách hàng thông qua việc hỗ trợ tích điểm, theo dõi lịch sử mua hàng để áp dụng các chương trình ưu đãi, từ đó tăng cường sự hài lòng và lòng trung thành của khách hàng
