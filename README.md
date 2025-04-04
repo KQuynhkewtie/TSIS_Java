@@ -47,3 +47,23 @@ Seminar nhóm:
 ## ĐỒ ÁN MÔN HỌC
 <a name="doan"></a>
 Đồ án Nhóm: Hệ thống quản lý nhà thuốc.
+
+Lý do chọn đề tài:
+Trong thời đại công nghệ phát triển mạnh mẽ, việc ứng dụng phần mềm vào quản lý nhà thuốc đã trở thành một nhu cầu thiết yếu. Một hệ thống quản lý nhà thuốc không chỉ giúp theo dõi quá trình mua bán dược phẩm mà còn hỗ trợ kiểm soát tồn kho, quản lý khách hàng, nhân viên, nhà cung cấp, hãng sản xuất một cách khoa học và chính xác, góp phần nâng cao chất lượng dịch vụ và tối ưu hiệu quả kinh doanh.
+
+Nhà thuốc là nơi cung cấp các loại dược phẩm phục vụ nhu cầu chăm sóc sức khỏe cho cộng đồng. Tuy nhiên, việc quản lý thủ công bằng sổ sách hoặc file Excel dễ dẫn đến sai sót, thất thoát hàng hóa, mất nhiều thời gian và công sức. Đặc biệt, với số lượng lớn các loại thuốc có thông tin chi tiết về thành phần, hạn sử dụng, nhà sản xuất, giá bán… việc quản lý không chính xác có thể ảnh hưởng trực tiếp đến hiệu quả kinh doanh và an toàn cho người sử dụng. Thấy được những khó khăn, nhóm chúng em đã chọn đề tài “Xây dựng hệ thống quản lý nhà thuốc” với mục tiêu tạo ra một hệ thống đơn giản và hiệu quả.
+
+Mô tả bài toán:
+Hệ thống quản lý nhà thuốc bao gồm nhiều thành phần quan trọng nhằm đảm bảo hoạt động trơn tru và hiệu quả. Trước tiên là quản lý nhân viên, giúp nhà thuốc lưu trữ thông tin của từng nhân viên như họ tên, số căn cước công dân, số điện thoại, vị trí công việc để thuận tiện cho việc phân quyền và giám sát. Nhân viên có thể đảm nhiệm các vai trò như bán hàng, kiểm kê kho hoặc quản lý hoạt động nhà thuốc.
+
+Tiếp theo là quản lý khách hàng, cho phép theo dõi thông tin của khách hàng, bao gồm cả khách lẻ và khách hàng thân thiết. Hệ thống cũng giúp nâng cao trải nghiệm khách hàng thông qua việc hỗ trợ tích điểm, theo dõi lịch sử mua hàng để áp dụng các chương trình ưu đãi, từ đó tăng cường sự hài lòng và lòng trung thành của khách hàng
+
+Bên cạnh đó, quản lý nhà cung ứng là một phần quan trọng của hệ thống. Nhà thuốc nhập thuốc từ nhiều nhà cung ứng khác nhau, mỗi nhà cung ứng có thông tin riêng như tên công ty, mã số thuế, địa chỉ, số điện thoại và email liên hệ. Việc lưu trữ thông tin này giúp quá trình nhập hàng diễn ra dễ dàng hơn và tránh nhầm lẫn khi đặt hàng từ nhiều nguồn khác nhau.
+
+Một yếu tố không thể thiếu trong hệ thống là quản lý sản phẩm (thuốc). Mỗi loại thuốc đều có thông tin quan trọng như tên sản phẩm, loại sản phẩm, quy cách đóng gói, số lô, số đăng ký, hạn sử dụng và giá bán. Tiếp đó, quản lý hàng tồn kho chặt chẽ, giúp theo dõi số lượng thuốc trong kho, cảnh báo khi sắp hết hàng hoặc khi có thuốc sắp hết hạn. Ngoài ra, hệ thống còn theo dõi hãng sản xuất, đơn vị trực tiếp sản xuất thuốc trước khi phân phối đến các nhà cung cấp. Một loại thuốc có thể được nhập từ nhiều nhà cung cấp khác nhau nhưng vẫn thuộc cùng một hãng sản xuất. Do đó, hệ thống quản lý cần đảm bảo thuốc có nguồn gốc rõ ràng, giúp nhà thuốc dễ dàng truy xuất thông tin sản phẩm, đảm bảo chất lượng và tuân thủ các quy định về dược phẩm.
+
+Khi khách hàng mua thuốc, hệ thống sẽ tự động tạo hóa đơn bán hàng, ghi nhận thông tin về ngày bán, tổng tiền thanh toán và danh sách các loại thuốc được mua. Điều này không chỉ giúp nhà thuốc dễ dàng tra cứu lịch sử giao dịch mà còn hỗ trợ theo dõi doanh thu một cách chính xác.
+
+Bên cạnh đó, quản lý nhập hàng là một chức năng quan trọng giúp nhà thuốc theo dõi quá trình nhập thuốc từ nhà cung cấp. Khi có đợt nhập hàng mới, hệ thống sẽ tạo phiếu nhập hàng, ghi nhận thông tin như ngày nhập, danh sách thuốc nhập và tổng tiền. Điều này giúp nhà thuốc kiểm soát lượng hàng nhập, đảm bảo thuốc luôn sẵn có và tránh tình trạng nhập nhầm sản phẩm.
+
+Để đảm bảo tính bảo mật và hoạt động hiệu quả, hệ thống cũng bao gồm quản lý tài khoản và phân quyền. Mỗi nhân viên sẽ được cấp một tài khoản riêng với tên đăng nhập và mật khẩu. Tùy vào chức vụ, hệ thống sẽ phân quyền khác nhau, chẳng hạn nhân viên bán hàng chỉ có quyền tạo hóa đơn, trong khi quản lý có thể theo dõi doanh thu, báo cáo và kiểm soát toàn bộ hệ thống. Không chỉ vậy, hệ thống còn cung cấp báo cáo thống kê chi tiết, giúp chủ nhà thuốc theo dõi doanh thu, chi phí nhập hàng, lợi nhuận theo ngày, tháng, năm để có kế hoạch kinh doanh phù hợp.
