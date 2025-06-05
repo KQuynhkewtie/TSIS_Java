@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class dbconnection {
 	public static Connection getConnection() {
-		String url = "jdbc:oracle:thin:@//localhost:1521/orclpdb4";
-		String user = "TSISPharmacy";
+		String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+		String user = "c##TSISPharmacy";
 		String pass = "tsispharmacy";
 
 		try {
