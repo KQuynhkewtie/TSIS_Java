@@ -72,8 +72,8 @@ Bên cạnh đó, quản lý nhập hàng là một chức năng quan trọng gi
 
 ## Hướng dẫn cài đặt chương trình
 <a name="huongdan"></a>
-[File hướng dẫn chi tiết]()*
+[File hướng dẫn chi tiết]()
 
 ## Video demo các chức năng
 <a name="video"></a>
-> * [Video Demo chức năng Phần mềm Quản lý nhà thuốc](https://drive.google.com/drive/folders/1JIbJfezcRAFFBIDilY8J8h-1tZYjez3N?usp=sharing)
+[Video Demo chức năng Phần mềm Quản lý nhà thuốc](https://drive.google.com/drive/folders/1JIbJfezcRAFFBIDilY8J8h-1tZYjez3N?usp=sharing)
