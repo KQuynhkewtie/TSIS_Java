@@ -1,4 +1,5 @@
 package GUI;
+
 import javax.swing.*;
 
 import BLL.KhachHangBLL;
@@ -31,7 +32,6 @@ public class TTCT_KH extends BasePanel {
 		lblKhachhangLink.setBounds(20, 20, 120, 30);
 		add(lblKhachhangLink);
 
-		// Sửa sự kiện click link "Khách hàng"
 		lblKhachhangLink.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -44,8 +44,6 @@ public class TTCT_KH extends BasePanel {
 		lblArrow.setBounds(140, 20, 300, 30);
 		add(lblArrow);
 
-
-		// form thêm khách hàng
 		JLabel lblMaKH = new JLabel("Mã khách hàng:");
 		lblMaKH.setBounds(20, 80, 150, 30);
 		add(lblMaKH);
@@ -71,7 +69,6 @@ public class TTCT_KH extends BasePanel {
 		txtHoTen.setForeground(Color.decode("#641A1F"));
 		txtHoTen.setOpaque(false);
 		add(txtHoTen);
-
 
 		JLabel lblSoLanMua = new JLabel("Số điện thoại:");
 		lblSoLanMua.setBounds(20, 180, 150, 30);
@@ -99,7 +96,7 @@ public class TTCT_KH extends BasePanel {
 		txtDiemTL.setOpaque(false);
 		add(txtDiemTL);
 
-		JLabel lblLoaiKH = new JLabel("Mã loại khách hàng:");
+		JLabel lblLoaiKH = new JLabel("Loại khách hàng:");
 		lblLoaiKH.setBounds(20, 280, 150, 30);
 		add(lblLoaiKH);
 		txtLoaiKH = new JTextArea();
@@ -111,7 +108,7 @@ public class TTCT_KH extends BasePanel {
 		txtLoaiKH.setForeground(Color.decode("#641A1F"));
 		txtLoaiKH.setOpaque(false);
 		add(txtLoaiKH);
-		// nút xóa
+
 		JButton btnXoa = new JButton("Xóa");
 		btnXoa.setBounds(450, 480, 100, 40);
 		btnXoa.setBackground(Color.decode("#F0483E"));
@@ -123,10 +120,12 @@ public class TTCT_KH extends BasePanel {
 
 				if (!currentuser.coQuyen("Xóa khách hàng")) {
 
-					JOptionPane.showMessageDialog(null, "Bạn không có quyền xóa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Bạn không có quyền xóa!", "Cảnh báo",
+							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
-				int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa khách hàng này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+				int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa khách hàng này?", "Xác nhận xóa",
+						JOptionPane.YES_NO_OPTION);
 				if (result == JOptionPane.YES_OPTION) {
 					KhachHangBLL khBLL = new KhachHangBLL();
 					boolean xoaThanhCong = khBLL.deleteKhachHangById(txtMaKH.getText());
@@ -135,7 +134,7 @@ public class TTCT_KH extends BasePanel {
 						JOptionPane.showMessageDialog(null, "Đã xóa khách hàng thành công!");
 						mainFrame.getPage("khachhang", KhachHang.class).refreshData();
 						mainFrame.showPage("khachhang");
-					}else{
+					} else {
 						System.out.println("Xóa khách hàng thất bại");
 					}
 				}
@@ -148,8 +147,6 @@ public class TTCT_KH extends BasePanel {
 		btnCapnhat.setForeground(Color.WHITE);
 		add(btnCapnhat);
 
-
-		// Sửa sự kiện nút Cập nhật
 		btnCapnhat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

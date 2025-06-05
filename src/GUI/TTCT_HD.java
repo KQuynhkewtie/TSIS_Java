@@ -42,19 +42,13 @@ public class TTCT_HD extends BasePanel {
 
     protected void initUniqueComponents() {
 
-        // Tiêu đề và breadcrumb
         initHeaderSection();
-
-        // Form thông tin hóa đơn
         initInfoForm();
 
-        // Bảng chi tiết sản phẩm
         initProductTable();
 
-        // Nút xóa
         initDeleteButton();
 
-        // Nút cập nhật
         initUpdateButton();
 
         // Thêm kiểm tra nếu có maHoaDon thì mới load data
@@ -87,7 +81,6 @@ public class TTCT_HD extends BasePanel {
     }
 
     private void initInfoForm() {
-        // Mã hóa đơn
         JLabel lblMaHD = new JLabel("Mã hóa đơn:");
         lblMaHD.setBounds(20, 80, 150, 25);
         add(lblMaHD);
@@ -97,7 +90,6 @@ public class TTCT_HD extends BasePanel {
         txtMaHD.setForeground(Color.decode("#641A1F"));
         add(txtMaHD);
 
-        // Mã nhân viên
         JLabel lblMaNV = new JLabel("Mã nhân viên:");
         lblMaNV.setBounds(20, 160, 150, 25);
         add(lblMaNV);
@@ -107,7 +99,6 @@ public class TTCT_HD extends BasePanel {
         txtMaNV.setForeground(Color.decode("#641A1F"));
         add(txtMaNV);
 
-        // Mã khách hàng
         JLabel lblMaKH = new JLabel("Mã khách hàng:");
         lblMaKH.setBounds(20, 240, 150, 25);
         add(lblMaKH);
@@ -117,7 +108,6 @@ public class TTCT_HD extends BasePanel {
         txtMaKH.setForeground(Color.decode("#641A1F"));
         add(txtMaKH);
 
-        // Ngày lập hóa đơn
         JLabel lblNgay = new JLabel("Ngày lập hóa đơn:");
         lblNgay.setBounds(460, 80, 150, 25);
         add(lblNgay);
@@ -127,7 +117,6 @@ public class TTCT_HD extends BasePanel {
         txtNgay.setForeground(Color.decode("#641A1F"));
         add(txtNgay);
 
-        // Thành tiền
         JLabel lblThanhTien = new JLabel("Thành tiền:");
         lblThanhTien.setBounds(460, 160, 150, 25);
         add(lblThanhTien);
@@ -196,10 +185,8 @@ public class TTCT_HD extends BasePanel {
             }
 
             CapNhatTT_HD capNhatFrame = mainFrame.getPage("capnhathd", CapNhatTT_HD.class);
-            // Truyền maHoaDon và callback function
             capNhatFrame.setMaHoaDon(maHoaDon);
             capNhatFrame.setOnUpdateSuccessCallback(() -> {
-                // Tải lại dữ liệu khi cập nhật thành công
                 reloadData(maHoaDon);
             });
             mainFrame.showPage("capnhathd");
@@ -208,7 +195,6 @@ public class TTCT_HD extends BasePanel {
     }
 
 
-    // Thêm phương thức để tải lại dữ liệu
     public void reloadData(String maHoaDon) {
         this.maHoaDon = maHoaDon;
         loadHoaDonData();
@@ -225,11 +211,9 @@ public class TTCT_HD extends BasePanel {
             txtNgay.setText(dateFormat.format(hd.getNgayBan()));
             txtThanhTien.setText(String.format("%,.0f VNĐ", hd.getThanhTien()));
 
-            // Thêm hiển thị trạng thái
             String trangThai = "Bình thường";
             if ("DA_HUY".equals(hd.getTrangThai())) {
                 trangThai = "Đã hủy";
-                // Có thể thay đổi màu sắc hoặc style để làm nổi bật
                 txtMaHD.setForeground(Color.RED);
             } else {
                 txtMaHD.setForeground(Color.decode("#641A1F"));
@@ -267,7 +251,6 @@ public class TTCT_HD extends BasePanel {
     }
 
     private void huyHoaDon() {
-        // Kiểm tra trạng thái hiện tại
         HoaDonDTO hd = hdBLL.layHoaDonTheoMa(maHoaDon);
         if (hd != null && "DA_HUY".equals(hd.getTrangThai())) {
             JOptionPane.showMessageDialog(
@@ -296,7 +279,7 @@ public class TTCT_HD extends BasePanel {
                         "Thông báo",
                         JOptionPane.INFORMATION_MESSAGE
                 );
-                loadHoaDonData(); // Tải lại dữ liệu để cập nhật trạng thái
+                loadHoaDonData();
             } else {
                 JOptionPane.showMessageDialog(
                         this,
@@ -331,7 +314,6 @@ public class TTCT_HD extends BasePanel {
                 return;
             }
 
-            // Lấy thông tin hóa đơn từ database
             HoaDonDTO hd = hdBLL.layHoaDonTheoMa(maHoaDon);
             if (hd == null) {
                 JOptionPane.showMessageDialog(this,
@@ -340,7 +322,6 @@ public class TTCT_HD extends BasePanel {
                 return;
             }
 
-            // Lấy chi tiết hóa đơn
             List<ChiTietHoaDonDTO> chiTiet = hdBLL.layChiTietHoaDon(maHoaDon);
             if (chiTiet == null || chiTiet.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
@@ -348,8 +329,7 @@ public class TTCT_HD extends BasePanel {
                         "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
-            // Lấy danh sách tên sản phẩm
+            
             List<String> danhSachMaSP = chiTiet.stream()
                     .map(ChiTietHoaDonDTO::getMaSanPham)
                     .collect(Collectors.toList());
