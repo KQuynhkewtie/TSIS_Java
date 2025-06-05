@@ -1,7 +1,7 @@
 Bước 1: Tải File QuanLyNhaThuoc.rar về máy sau đó giải nén thư mục.
-Bước 2: Tải file QLNT_con.sql. Vào CMD hoặc SQL*Plus tạo user “TSISPharmacy” mật khẩu “tsispharmacy” và cấp quyền cho user.
-CREATE USER c##QLNT IDENTIFIED BY qlnt;
-GRANT DBA to c##QLNT;
+Bước 2: Tải file QLNT_con.sql. Vào CMD hoặc SQL*Plus tạo user “c##TSISPharmacy” mật khẩu “tsispharmacy” và cấp quyền cho user.
+CREATE USER c##TSISPharmacy IDENTIFIED BY tsispharmacy;
+GRANT DBA to c##TSISPharmacy;
 Bước 3:  Vào oracle tạo Connect với user vừa tạo. Sau đó tiến hành execute file sql trên user vừa tạo.
 Lưu ý: Có tất cả 14 bảng dữ liệu, phải import theo thứ tự: VAITRO, QUYEN, VAITRO_QUYEN, NHANVIEN, TAIKHOAN, KHACHHANG, NHACUNGUNG, HANGSANXUAT, LOAISANPHAM, SANPHAM, PHIEUNHAPHANG, CHITIETPHIEUNHAPHANG, HOADON, CHITIETHOADON.
 Bước 4: Mở project trong IntelliJ: Chọn File -> Open -> Chọn thư mục đã giải nén ở bước 1.
