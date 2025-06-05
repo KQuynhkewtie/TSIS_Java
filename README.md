@@ -71,8 +71,8 @@ Bên cạnh đó, quản lý nhập hàng là một chức năng quan trọng gi
 Để đảm bảo tính bảo mật và hoạt động hiệu quả, hệ thống cũng bao gồm quản lý tài khoản và phân quyền. Mỗi nhân viên sẽ được cấp một tài khoản riêng với tên đăng nhập và mật khẩu. Tùy vào chức vụ, hệ thống sẽ phân quyền khác nhau, chẳng hạn nhân viên bán hàng chỉ có quyền tạo hóa đơn, trong khi quản lý có thể theo dõi doanh thu, báo cáo và kiểm soát toàn bộ hệ thống. Không chỉ vậy, hệ thống còn cung cấp báo cáo thống kê chi tiết, giúp chủ nhà thuốc theo dõi doanh thu, chi phí nhập hàng, lợi nhuận theo ngày, tháng, năm để có kế hoạch kinh doanh phù hợp.
 
 ## Hướng dẫn cài đặt chương trình
-<a name="huongdan"></a>
-[File hướng dẫn chi tiết]()
+[Hướng dẫn chi tiết](https://docs.google.com/document/d/1Gs99q9GnmT1xfZxx0A5Svjy4711vIpSlUCH3HABbg8I/edit?tab=t.0)
+
 
 ## Video demo các chức năng
 <a name="video"></a>
