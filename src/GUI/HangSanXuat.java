@@ -5,7 +5,6 @@ import javax.swing.table.DefaultTableModel;
 
 import BLL.HangSanXuatBLL;
 import DTO.HangSanXuatDTO;
-
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -27,7 +26,7 @@ public class HangSanXuat extends BasePanel {
     }
     @Override
     public void refreshData() {
-        loadHSX(); // Load lại dữ liệu
+        loadHSX();
     }
 
     @Override
@@ -87,7 +86,6 @@ public class HangSanXuat extends BasePanel {
         btnThemHSX.setForeground(Color.WHITE);
         add(btnThemHSX);
 
-        // Table
         String[] columnNames = { "Mã hãng sản xuất", "Tên hãng sản xuất", "Mã số thuế", "Địa chỉ", "Số điện thoại" };
         model = new DefaultTableModel(columnNames, 0);
         table = new JTable(model);

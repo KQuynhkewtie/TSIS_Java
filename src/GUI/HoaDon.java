@@ -23,8 +23,6 @@ public class HoaDon extends BasePanel {
     private JComboBox<String> cboTrangThai;
     private Timer searchTimer;
 
-
-
     public HoaDon(MainFrame mainFrame) {
         super(mainFrame);
         initUniqueComponents();
@@ -40,6 +38,7 @@ public class HoaDon extends BasePanel {
         highlightMenuButton("Hóa đơn");
         refreshData();
     }
+
     protected void initUniqueComponents() {
 
         JLabel lblHD = new JLabel("Hóa đơn", SwingConstants.LEFT);
@@ -47,14 +46,11 @@ public class HoaDon extends BasePanel {
         lblHD.setBounds(20, 20, 200, 30);
         add(lblHD);
 
-        // Ô tìm kiếm và bộ lọc
         initSearchComponents();
         initAdvancedFilters();
 
-        // Bảng hiển thị
         initTable();
 
-        // Nút thêm mới
         JButton btnThemHd = new JButton("+ Thêm hóa đơn");
         btnThemHd.setBounds(620, 70, 160, 35);
         btnThemHd.setBackground(Color.decode("#F0483E"));
@@ -85,7 +81,6 @@ public class HoaDon extends BasePanel {
         btnSearch.addActionListener(e -> performSearch());
         add(btnSearch);
 
-        // Nút tải lại
         JButton btnReload = new JButton("Tải lại");
         btnReload.setBounds(620, 110, 100, 35);
         btnReload.setForeground(Color.WHITE);
@@ -93,7 +88,6 @@ public class HoaDon extends BasePanel {
         btnReload.addActionListener(e -> resetFiltersAndReload());
         add(btnReload);
 
-        // Xử lý placeholder cho ô tìm kiếm
         searchField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -156,22 +150,17 @@ public class HoaDon extends BasePanel {
     }
 
     private void resetFiltersAndReload() {
-        // Reset search field
         searchField.setText("Tìm kiếm hóa đơn");
         searchField.setForeground(Color.GRAY);
 
-        // Reset date filters
         dateChooserFrom.setDate(null);
         dateChooserTo.setDate(null);
 
-        // Reset amount filters
         txtMinAmount.setText("");
         txtMaxAmount.setText("");
 
-        // Reset status filter
         cboTrangThai.setSelectedIndex(0);
 
-        // Reload all data
         loadDataToTable();
     }
 
@@ -198,7 +187,6 @@ public class HoaDon extends BasePanel {
 
         yPos += 35;
 
-        // Nhóm lọc tiền
         JLabel lblMinAmount = new JLabel("Từ tiền:");
         lblMinAmount.setBounds(20, yPos, 60, 25);
         add(lblMinAmount);
@@ -215,19 +203,19 @@ public class HoaDon extends BasePanel {
         txtMaxAmount.setBounds(330, yPos, 150, 25);
         add(txtMaxAmount);
 
-
         yPos += 35;
         JLabel lblTrangThai = new JLabel("Trạng thái:");
         lblTrangThai.setBounds(20, yPos, 70, 25);
         add(lblTrangThai);
 
-        cboTrangThai = new JComboBox<>(new String[]{"Tất cả", "Bình thường", "Đã hủy"});
+        cboTrangThai = new JComboBox<>(new String[] { "Tất cả", "Bình thường", "Đã hủy" });
         cboTrangThai.setBounds(90, yPos, 150, 25);
         add(cboTrangThai);
     }
 
     private void initTable() {
-        String[] columnNames = {"Mã hóa đơn", "Mã nhân viên", "Mã khách hàng", "Ngày bán", "Thành tiền", "Trạng thái"};
+        String[] columnNames = { "Mã hóa đơn", "Mã nhân viên", "Mã khách hàng", "Ngày bán", "Thành tiền",
+                "Trạng thái" };
         model = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -240,7 +228,6 @@ public class HoaDon extends BasePanel {
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component c = super.prepareRenderer(renderer, row, column);
 
-                // Lấy giá trị trạng thái từ model (cột cuối cùng)
                 String trangThai = (String) model.getValueAt(row, model.getColumnCount() - 1);
 
                 if ("Đã hủy".equals(trangThai)) {
@@ -312,7 +299,6 @@ public class HoaDon extends BasePanel {
         Double minAmount = null;
         Double maxAmount = null;
 
-        // Lấy trạng thái từ combobox
         String trangThai = cboTrangThai.getSelectedItem().toString();
 
         try {
@@ -337,7 +323,7 @@ public class HoaDon extends BasePanel {
     }
 
     private void searchHoaDon(String keyword, String fromDate, String toDate,
-                              Double minAmount, Double maxAmount, String trangThai) {
+            Double minAmount, Double maxAmount, String trangThai) {
         model.setRowCount(0);
 
         // Chuyển đổi giá trị trạng thái từ combobox sang giá trị DB

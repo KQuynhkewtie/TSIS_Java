@@ -25,6 +25,7 @@ public class NhanVien extends BasePanel {
     private JTable table;
     private JTextField searchnvField;
     private Map<String, String> viTriMap;
+
     public NhanVien(MainFrame mainFrame) {
         super(mainFrame);
         initUniqueComponents();
@@ -48,11 +49,9 @@ public class NhanVien extends BasePanel {
         lblNhanVien.setBounds(20, 20, 200, 30);
         add(lblNhanVien);
 
-
         searchnvField = new JTextField("Tìm kiếm nhân viên");
         searchnvField.setBounds(20, 70, 300, 35);
         add(searchnvField);
-        // Thêm sự kiện focus
         searchnvField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -88,8 +87,7 @@ public class NhanVien extends BasePanel {
         btnThemNV.setForeground(Color.WHITE);
         add(btnThemNV);
 
-
-        String[] columnNames = { "Mã", "Họ tên","CCCD", "SĐT", "Vị trí công việc","Mã số thuế"};
+        String[] columnNames = { "Mã", "Họ tên", "CCCD", "SĐT", "Vị trí công việc", "Mã số thuế" };
         model = new DefaultTableModel(columnNames, 0);
         table = new JTable(model);
         table.getTableHeader().setPreferredSize(new Dimension(0, 35));
@@ -132,17 +130,21 @@ public class NhanVien extends BasePanel {
         });
 
     }
+
     private void loadNhanVien() {
         model.setRowCount(0);
         List<NhanVienDTO> list = bllnv.getAllNhanVien();
         for (NhanVienDTO nv : list) {
 
             String tenViTri = bllvt.getTenVaiTro(nv.getViTriCongViec());
-            if (tenViTri == null) tenViTri = "Chưa xác định";
+            if (tenViTri == null)
+                tenViTri = "Chưa xác định";
 
-            model.addRow(new Object[]{ nv.getMaNhanVien(), nv.getHoTen(), nv.getCccd(), nv.getSdt(), tenViTri, nv.getMaSoThue(), nv.getTrangThai()});
+            model.addRow(new Object[] { nv.getMaNhanVien(), nv.getHoTen(), nv.getCccd(), nv.getSdt(), tenViTri,
+                    nv.getMaSoThue(), nv.getTrangThai() });
         }
     }
+
     private void searchNhanVien() {
         String keyword = searchnvField.getText().trim();
         if (keyword.equals("Tìm") || keyword.isEmpty()) {
@@ -155,7 +157,8 @@ public class NhanVien extends BasePanel {
 
         for (NhanVienDTO nv : list) {
             String tenViTri = nv.getTenVaiTro();
-            model.addRow(new Object[]{nv.getMaNhanVien(), nv.getHoTen(),  nv.getCccd(), nv.getSdt(), tenViTri, nv.getMaSoThue(), nv.getTrangThai()});
+            model.addRow(new Object[] { nv.getMaNhanVien(), nv.getHoTen(), nv.getCccd(), nv.getSdt(), tenViTri,
+                    nv.getMaSoThue(), nv.getTrangThai() });
         }
     }
 }
