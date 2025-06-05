@@ -15,6 +15,8 @@
 * [ Thành viên nhóm](#thanhvien)
 * [ Seminar](#seminar)
 * [ Đồ án môn học](#doan)
+* [ Hướng dẫn cài đặt chương trình](#huongdan)
+* [ Video demo các chức năng](#video)
 
 
 ## GIỚI THIỆU MÔN HỌC
@@ -67,3 +69,11 @@ Khi khách hàng mua thuốc, hệ thống sẽ tự động tạo hóa đơn b�
 Bên cạnh đó, quản lý nhập hàng là một chức năng quan trọng giúp nhà thuốc theo dõi quá trình nhập thuốc từ nhà cung cấp. Khi có đợt nhập hàng mới, hệ thống sẽ tạo phiếu nhập hàng, ghi nhận thông tin như ngày nhập, danh sách thuốc nhập và tổng tiền. Điều này giúp nhà thuốc kiểm soát lượng hàng nhập, đảm bảo thuốc luôn sẵn có và tránh tình trạng nhập nhầm sản phẩm.
 
 Để đảm bảo tính bảo mật và hoạt động hiệu quả, hệ thống cũng bao gồm quản lý tài khoản và phân quyền. Mỗi nhân viên sẽ được cấp một tài khoản riêng với tên đăng nhập và mật khẩu. Tùy vào chức vụ, hệ thống sẽ phân quyền khác nhau, chẳng hạn nhân viên bán hàng chỉ có quyền tạo hóa đơn, trong khi quản lý có thể theo dõi doanh thu, báo cáo và kiểm soát toàn bộ hệ thống. Không chỉ vậy, hệ thống còn cung cấp báo cáo thống kê chi tiết, giúp chủ nhà thuốc theo dõi doanh thu, chi phí nhập hàng, lợi nhuận theo ngày, tháng, năm để có kế hoạch kinh doanh phù hợp.
+
+## Hướng dẫn cài đặt chương trình
+<a name="huongdan"></a>
+[File hướng dẫn chi tiết]()*
+
+## Video demo các chức năng
+<a name="video"></a>
+> * [Video Demo chức năng Phần mềm Quản lý nhà thuốc](https://drive.google.com/drive/folders/1JIbJfezcRAFFBIDilY8J8h-1tZYjez3N?usp=sharing)
