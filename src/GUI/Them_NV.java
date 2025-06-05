@@ -15,6 +15,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Them_NV extends BasePanel {
+    private JTextField txtMaNV, txtHoTen, txtSDT, txtCCCD, txtMST;
+    ButtonGroup groupVTCV;
     private NhanVienBLL nvBLL = new NhanVienBLL();
     public Them_NV(MainFrame mainFrame) {
         super(mainFrame);
@@ -24,6 +26,12 @@ public class Them_NV extends BasePanel {
     @Override
     public void onPageShown() {
         highlightMenuButton("Nhân viên");
+        txtMaNV.setText("");
+        txtHoTen.setText("");
+        txtSDT.setText("");
+        txtCCCD.setText("");
+        txtMST.setText("");
+        groupVTCV.clearSelection();
     }
     protected void initUniqueComponents() {
 
@@ -45,35 +53,33 @@ public class Them_NV extends BasePanel {
             }
         });
 
-        //form thêm nhân viên
         JLabel lblMaNV = new JLabel("Mã nhân viên:");
         lblMaNV.setBounds(20, 80, 150, 25);
         add(lblMaNV);
         JTextField txtMaNV = new JTextField();
         txtMaNV.setBounds(20, 110, 300, 30);
         add(txtMaNV);
-        //họ tên
+
         JLabel lblHoTen = new JLabel("Họ tên:");
         lblHoTen.setBounds(20, 160, 150, 25);
         add(lblHoTen);
         JTextField txtHoTen = new JTextField();
         txtHoTen.setBounds(20, 190, 300, 30);
         add(txtHoTen);
-        //số điện thoại
+
         JLabel lblSDT = new JLabel("Số điện thoại:");
         lblSDT.setBounds(20, 240, 150, 25);
         add(lblSDT);
         JTextField txtSDT = new JTextField();
         txtSDT.setBounds(20, 270, 300, 30);
         add(txtSDT);
-        //cccd
+
         JLabel lblCCCD = new JLabel("CCCD:");
         lblCCCD.setBounds(20, 320, 150, 25);
         add(lblCCCD);
         JTextField txtCCCD = new JTextField();
         txtCCCD.setBounds(20, 350, 300, 30);
         add(txtCCCD);
-        //vị trí công việc
 
         JLabel lblVTCV = new JLabel("Vị trí công việc:");
         lblVTCV.setBounds(460, 80, 300, 30);
@@ -87,19 +93,17 @@ public class Them_NV extends BasePanel {
         rbQuanLy.setBounds(460, 140, 200, 25);
         add(rbQuanLy);
 
-
-        ButtonGroup groupVTCV = new ButtonGroup();
+        groupVTCV = new ButtonGroup();
         groupVTCV.add(rbBanHang);
         groupVTCV.add(rbQuanLy);
-        //mã số thuế
+ 
         JLabel lblMST = new JLabel("Mã số thuế:");
         lblMST.setBounds(460, 160, 150, 25);
         add(lblMST);
-        JTextField txtMST = new JTextField();
+        txtMST = new JTextField();
         txtMST.setBounds(460, 190, 300, 30);
         add(txtMST);
 
-        //nút lưu
         JButton btnLuu = new JButton("Lưu");
         btnLuu.setBounds(460, 490, 100, 40);
         btnLuu.setBackground(Color.decode("#F0483E"));

@@ -1,6 +1,5 @@
 package GUI;
 
-
 import javax.swing.*;
 
 import DTO.KhachHangDTO;
@@ -16,14 +15,22 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Them_KH extends BasePanel {
-    private KhachHangBLL khBLL= new KhachHangBLL();
+    private JTextField txtMaKH, txtHoTen, txtsdt, txtDiemTL, txtLoaiKH;
+    private KhachHangBLL khBLL = new KhachHangBLL();
+
     public Them_KH(MainFrame mainFrame) {
         super(mainFrame);
         initUniqueComponents();
     }
+
     @Override
     public void onPageShown() {
         highlightMenuButton("Khách hàng");
+        txtMaKH.setText("");
+        txtHoTen.setText("");
+        txtsdt.setText("");
+        txtDiemTL.setText("0.0");
+        txtLoaiKH.setText("Bình thường");
     }
 
     protected void initUniqueComponents() {
@@ -38,7 +45,6 @@ public class Them_KH extends BasePanel {
         lblArrow.setBounds(140, 20, 400, 30);
         add(lblArrow);
 
-        // Sửa sự kiện click link "Khách hàng"
         lblSanPhamLink.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -46,32 +52,31 @@ public class Them_KH extends BasePanel {
             }
         });
 
-        //form thêm khách hàng
         JLabel lblMaKH = new JLabel("Mã khách hàng:");
         lblMaKH.setBounds(20, 80, 150, 30);
         add(lblMaKH);
-        JTextField txtMaKH = new JTextField();
+        txtMaKH = new JTextField();
         txtMaKH.setBounds(200, 80, 200, 30);
         add(txtMaKH);
-        //họ tên
+
         JLabel lblHoTen = new JLabel("Họ tên:");
         lblHoTen.setBounds(20, 130, 150, 30);
         add(lblHoTen);
-        JTextField txtHoTen = new JTextField();
+        txtHoTen = new JTextField();
         txtHoTen.setBounds(200, 130, 200, 30);
         add(txtHoTen);
-        //số lần mua
+
         JLabel lblsdt = new JLabel("Số diện thoại:");
         lblsdt.setBounds(20, 180, 150, 30);
         add(lblsdt);
-        JTextField txtsdt = new JTextField();
+        txtsdt = new JTextField();
         txtsdt.setBounds(200, 180, 200, 30);
         add(txtsdt);
-        //điểm tích lũy
+
         JLabel lblDiemTL = new JLabel("Điểm tích lũy:");
         lblDiemTL.setBounds(20, 230, 150, 30);
         add(lblDiemTL);
-        JTextField txtDiemTL = new JTextField("0.0");
+        txtDiemTL = new JTextField("0.0");
         txtDiemTL.setBounds(200, 230, 200, 30);
         txtDiemTL.setEditable(false);
         txtDiemTL.setFocusable(false);
@@ -81,15 +86,13 @@ public class Them_KH extends BasePanel {
         JLabel lblLoaiKH = new JLabel("Loại khách hàng:");
         lblLoaiKH.setBounds(20, 280, 150, 30);
         add(lblLoaiKH);
-        JTextField txtLoaiKH = new JTextField("Bình thường");
+        txtLoaiKH = new JTextField("Bình thường");
         txtLoaiKH.setBounds(200, 280, 200, 30);
         txtLoaiKH.setEditable(false);
         txtLoaiKH.setFocusable(false);
         txtLoaiKH.setBackground(new Color(230, 230, 230));
         add(txtLoaiKH);
 
-
-        //nút lưu
         JButton btnLuu = new JButton("Lưu");
         btnLuu.setBounds(200, 330, 100, 30);
         btnLuu.setBackground(Color.decode("#F0483E"));
@@ -101,7 +104,8 @@ public class Them_KH extends BasePanel {
             public void actionPerformed(ActionEvent e) {
                 if (!currentuser.coQuyen("Thêm khách hàng")) {
 
-                    JOptionPane.showMessageDialog(null, "Bạn không có quyền thêm!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Bạn không có quyền thêm!", "Cảnh báo",
+                            JOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 String maKH = txtMaKH.getText().trim();
@@ -109,16 +113,19 @@ public class Them_KH extends BasePanel {
                 String SDT = txtsdt.getText().trim();
 
                 if (maKH.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập mã khách hàng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập mã khách hàng!", "Lỗi",
+                            JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (tenKH.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập tên khách hàng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập tên khách hàng!", "Lỗi",
+                            JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
                 if (SDT.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập số điện thoại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập số điện thoại!", "Lỗi",
+                            JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 KhachHangDTO kh = new KhachHangDTO(maKH, tenKH, SDT);
@@ -129,18 +136,19 @@ public class Them_KH extends BasePanel {
                         mainFrame.getPage("khachhang", KhachHang.class).refreshData();
                         mainFrame.showPage("khachhang");
                     } else {
-                        JOptionPane.showMessageDialog(null, "Thêm khách hàng thất bại! Kiểm tra dữ liệu." , "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Thêm khách hàng thất bại! Kiểm tra dữ liệu.", "Lỗi",
+                                JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng định dạng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng định dạng!", "Lỗi",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
 
-
         setDefaultButtonSafe(btnLuu);
 
-        JTextField[] textFields = { txtMaKH,txtHoTen, txtsdt};
+        JTextField[] textFields = { txtMaKH, txtHoTen, txtsdt };
 
         for (int i = 0; i < textFields.length; i++) {
             final int currentIndex = i;

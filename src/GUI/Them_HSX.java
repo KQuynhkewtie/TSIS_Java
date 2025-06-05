@@ -16,6 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Them_HSX extends BasePanel {
+    JTextField txtMaSoThue,txtMaHSX, txtdiachi, txttenHSX,txtsdt;
     private HangSanXuatBLL hsxBLL = new HangSanXuatBLL();
     public Them_HSX(MainFrame mainFrame) {
         super(mainFrame);
@@ -25,6 +26,11 @@ public class Them_HSX extends BasePanel {
     @Override
     public void onPageShown() {
         highlightMenuButton("Hãng sản xuất");
+        txtMaSoThue.setText("");
+        txtMaHSX.setText("");
+        txtdiachi.setText("");
+        txttenHSX.setText("");
+        txtsdt.setText("");
     }
     protected void initUniqueComponents() {
 
@@ -51,35 +57,35 @@ public class Them_HSX extends BasePanel {
         JLabel lblMaSoThue = new JLabel("Mã số thuế:");
         lblMaSoThue.setBounds(460, 160, 150, 25);
         add(lblMaSoThue);
-        JTextField txtMaSoThue = new JTextField();
+        txtMaSoThue = new JTextField();
         txtMaSoThue.setBounds(460, 190, 300, 30);
         add(txtMaSoThue);
 
         JLabel lblMaHSX = new JLabel("Mã hãng sản xuất:");
         lblMaHSX.setBounds(20, 80, 150, 25);
         add(lblMaHSX);
-        JTextField txtMaHSX = new JTextField();
+        txtMaHSX = new JTextField();
         txtMaHSX.setBounds(20, 110, 300, 30);
         add(txtMaHSX);
 
         JLabel lbldiachi = new JLabel("Địa chỉ:");
         lbldiachi.setBounds(20, 160, 150, 25);
         add(lbldiachi);
-        JTextField txtdiachi = new JTextField();
+        txtdiachi = new JTextField();
         txtdiachi.setBounds(20, 190, 300, 30);
         add(txtdiachi);
 
         JLabel lbltenHSX = new JLabel("Tên hãng sản xuất:");
         lbltenHSX.setBounds(460, 80, 150, 25);
         add(lbltenHSX);
-        JTextField txttenHSX = new JTextField();
+        txttenHSX = new JTextField();
         txttenHSX.setBounds(460, 110, 300, 30);
         add(txttenHSX);
 
         JLabel lblsdt = new JLabel("Số điện thoại:");
         lblsdt.setBounds(460, 240, 150, 25);
         add(lblsdt);
-        JTextField txtsdt = new JTextField();
+        txtsdt = new JTextField();
         txtsdt.setBounds(460, 270, 300, 30);
         add(txtsdt);
 
