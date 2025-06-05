@@ -1,11 +1,9 @@
 package GUI;
 
 import javax.swing.*;
-
 import BLL.KhachHangBLL;
 import DTO.KhachHangDTO;
 import DTO.currentuser;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,18 +12,19 @@ import java.awt.event.MouseEvent;
 
 public class CapNhatTT_KH extends BasePanel {
     private KhachHangBLL bllKhachhang = new KhachHangBLL();
-    private JTextField  txtHoTen, txtMaKH, txtDiemTL, txtsdt, txtLoaiKH;
+    private JTextField txtHoTen, txtMaKH, txtDiemTL, txtsdt, txtLoaiKH;
+
     public CapNhatTT_KH(MainFrame mainFrame) {
         super(mainFrame);
         initUniqueComponents();
     }
+
     @Override
     public void onPageShown() {
         highlightMenuButton("Khách hàng");
     }
 
     protected void initUniqueComponents() {
-
 
         JLabel lblKhachhangLink = new JLabel("<html><u>Khách Hàng</u></html>");
         lblKhachhangLink.setFont(new Font("Arial", Font.BOLD, 20));
@@ -44,15 +43,12 @@ public class CapNhatTT_KH extends BasePanel {
         lblArrow.setBounds(380, 20, 900, 30);
         add(lblArrow);
 
-        // Sửa sự kiện click link "Khách hàng"
         lblKhachhangLink.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 mainFrame.showPage("khachhang");
             }
         });
-
-
 
         lblTTKhachhangLink.addMouseListener(new MouseAdapter() {
             @Override
@@ -116,7 +112,6 @@ public class CapNhatTT_KH extends BasePanel {
         txtLoaiKH.setFocusable(false);
         txtLoaiKH.setBackground(new Color(230, 230, 230));
 
-        // Nút Lưu
         JButton btnLuusua = new JButton("Lưu");
         btnLuusua.setBounds(450, 480, 100, 40);
         btnLuusua.setBackground(Color.decode("#F0483E"));
@@ -127,10 +122,10 @@ public class CapNhatTT_KH extends BasePanel {
             public void actionPerformed(ActionEvent e) {
                 if (!currentuser.coQuyen("Sửa khách hàng")) {
 
-                    JOptionPane.showMessageDialog(null, "Bạn không có quyền cập nhật!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Bạn không có quyền cập nhật!", "Cảnh báo",
+                            JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                // Lấy dữ liệu từ các trường nhập
                 String maKH = txtMaKH.getText().trim();
                 String tenKH = txtHoTen.getText().trim();
                 String DTLstr = txtDiemTL.getText().trim();
@@ -138,16 +133,19 @@ public class CapNhatTT_KH extends BasePanel {
                 String sdt = txtsdt.getText().trim();
 
                 if (maKH.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập mã khách hàng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập mã khách hàng!", "Lỗi",
+                            JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (tenKH.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập tên khách hàng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập tên khách hàng!", "Lỗi",
+                            JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
                 if (sdt.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập số điện thoại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập số điện thoại!", "Lỗi",
+                            JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 try {
@@ -180,6 +178,7 @@ public class CapNhatTT_KH extends BasePanel {
         });
         setDefaultButtonSafe(btnLuusua);
     }
+
     public void loadCustomerInfoForUpdate(String maKH) {
         KhachHangDTO kh = bllKhachhang.getKhachHangById(maKH);
 
