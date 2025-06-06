@@ -1,5 +1,5 @@
 Bước 1: Tải File QuanLyNhaThuoc.rar về máy sau đó giải nén thư mục.
-Bước 2: Tải file QLNT_con.sql. Vào CMD hoặc SQL*Plus tạo user “c##TSISPharmacy” mật khẩu “tsispharmacy” và cấp quyền cho user.
+Bước 2: Tải file QLNT.sql. Vào CMD hoặc SQL*Plus tạo user “c##TSISPharmacy” mật khẩu “tsispharmacy” và cấp quyền cho user.
 CREATE USER c##TSISPharmacy IDENTIFIED BY tsispharmacy;
 GRANT DBA to c##TSISPharmacy;
 Bước 3:  Vào oracle tạo Connect với user vừa tạo. Sau đó tiến hành execute file sql trên user vừa tạo.
