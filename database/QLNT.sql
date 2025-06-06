@@ -587,13 +587,13 @@ BEGIN
 END;
 /
 
---OK này----
+
 CREATE OR REPLACE TRIGGER trg_kiem_tra_chi_tiet_hd
 BEFORE INSERT ON CHITIETHOADON
 FOR EACH ROW
 DECLARE
     v_ton_kho NUMBER;
-    v_trang_thai VARCHAR2(20); -- Thêm biến mới để lưu trạng thái
+    v_trang_thai VARCHAR2(20); 
 BEGIN
     -- Kiểm tra hóa đơn tồn tại và chưa hủy
     BEGIN
@@ -618,7 +618,7 @@ END;
 /
 
 
---OK NÀY--
+
 CREATE OR REPLACE TRIGGER trg_phuc_hoi_ton_kho
 AFTER UPDATE OF TRANGTHAI ON HOADON
 FOR EACH ROW
@@ -630,7 +630,7 @@ BEGIN
 END;
 /
 
---OK---
+
 CREATE OR REPLACE TRIGGER trg_auto_update_tonkho
 AFTER INSERT OR UPDATE OR DELETE ON CHITIETPHIEUNHAPHANG
 FOR EACH ROW
