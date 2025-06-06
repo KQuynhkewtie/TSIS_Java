@@ -662,6 +662,50 @@ BEGIN
 END;
 /
 
+CREATE OR REPLACE TRIGGER trg_kiem_tra_chi_tiet_hd
+BEFORE INSERT OR UPDATE OR DELETE ON CHITIETHOADON
+FOR EACH ROW
+DECLARE
+    v_ton_kho NUMBER;
+    v_trang_thai VARCHAR2(20);
+    v_chech_lech NUMBER;
+BEGIN
+    BEGIN
+        SELECT TRANGTHAI INTO v_trang_thai FROM HOADON 
+        WHERE MAHD = NVL(:NEW.MAHD, :OLD.MAHD);
+        
+        IF v_trang_thai = 'DA_HUY' THEN
+            RAISE_APPLICATION_ERROR(-20001, 'Không thể thay đổi chi tiết hóa đơn đã hủy');
+        END IF;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RAISE_APPLICATION_ERROR(-20002, 'Hóa đơn không tồn tại');
+    END;
+    
+    IF INSERTING THEN
+        SELECT SOLUONG INTO v_ton_kho FROM SANPHAM WHERE MASP = :NEW.MASP;
+        IF v_ton_kho < :NEW.SOLUONG THEN
+            RAISE_APPLICATION_ERROR(-20003, 'Không đủ tồn kho');
+        END IF;
+        UPDATE SANPHAM SET SOLUONG = SOLUONG - :NEW.SOLUONG WHERE MASP = :NEW.MASP;
+        
+    ELSIF UPDATING THEN
+        v_chech_lech := :NEW.SOLUONG - :OLD.SOLUONG;
+        
+        IF v_chech_lech != 0 THEN
+            SELECT SOLUONG INTO v_ton_kho FROM SANPHAM WHERE MASP = :NEW.MASP;
+            IF v_ton_kho < v_chech_lech THEN
+                RAISE_APPLICATION_ERROR(-20004, 'Không đủ tồn kho cho thay đổi');
+            END IF;
+            UPDATE SANPHAM SET SOLUONG = SOLUONG - v_chech_lech WHERE MASP = :NEW.MASP;
+        END IF;
+        
+    ELSIF DELETING THEN
+        UPDATE SANPHAM SET SOLUONG = SOLUONG + :OLD.SOLUONG WHERE MASP = :OLD.MASP;
+    END IF;
+END;
+/
+
 
 --Nhiều nhân viên tạo hóa đơn cùng lúc
 CREATE OR REPLACE PROCEDURE TaoHoaDon_Dongthoi (
