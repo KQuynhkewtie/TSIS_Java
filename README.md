@@ -13,7 +13,6 @@
 * [ Giới thiệu môn học](#gioithieumonhoc)
 * [ Giảng viên hướng dẫn](#giangvien)
 * [ Thành viên nhóm](#thanhvien)
-* [ Seminar](#seminar)
 * [ Đồ án môn học](#doan)
 * [ Hướng dẫn cài đặt chương trình](#huongdan)
 * [ Video demo các chức năng](#video)
@@ -41,10 +40,6 @@
 | 3      | 23521331      | Đinh Nguyễn Khánh Quỳnh     |23521331@gm.uit.edu.vn   |
 | 4      | 23520313      | Nguyễn Minh Đức             |23520313@gm.uit.edu.vn   |
 
-
-## SEMINAR
-<a name="seminar"></a>
-Seminar nhóm: 
 
 ## ĐỒ ÁN MÔN HỌC
 <a name="doan"></a>
