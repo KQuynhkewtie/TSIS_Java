@@ -26,13 +26,10 @@ public class HoaDonBLL {
         }
     }
 
-    // Các phương thức quản lý hóa đơn mới
     public List<HoaDonDTO> layDanhSachHoaDon() {
         return hdDAL.layDanhSachHoaDon();
     }
 
-
-    // Cập nhật phương thức tìm kiếm để hỗ trợ lọc trạng thái
     public List<HoaDonDTO> timKiemHoaDon(String keyword, String fromDate, String toDate,
                                          Double minAmount, Double maxAmount, String trangThai) {
         return hdDAL.timKiemHoaDon(keyword, fromDate, toDate, minAmount, maxAmount, trangThai);
@@ -51,21 +48,15 @@ public class HoaDonBLL {
         return hdDAL.layDanhSachTenSanPham(danhSachMaSP);
     }
 
-    // Thêm các phương thức mới
     public boolean themHoaDonVoiChiTiet(HoaDonDTO hd, List<ChiTietHoaDonDTO> danhSachChiTiet) {
         try {
-            // Bắt đầu transaction
             connection.setAutoCommit(false);
 
-            // Kiểm tra số lượng tồn kho
-
-            // Tính tổng tiền
             double tongTien = danhSachChiTiet.stream()
                     .mapToDouble(ct -> ct.getSoLuong() * ct.getGia())
                     .sum();
             hd.setThanhTien(tongTien);
 
-            // Thêm hóa đơn và chi tiết
             boolean result = hdDAL.themHoaDonVoiChiTiet(hd, danhSachChiTiet);
 
             if (result) {
@@ -132,7 +123,6 @@ public class HoaDonBLL {
             return false;
         }
 
-        // Validate details
         if (danhSachChiTiet == null || danhSachChiTiet.isEmpty()) {
             return false;
         }
@@ -149,51 +139,40 @@ public class HoaDonBLL {
             }
         }
 
-        // Calculate total amount
         double tongTien = danhSachChiTiet.stream()
                 .mapToDouble(ct -> ct.getSoLuong() * ct.getGia())
                 .sum();
         hd.setThanhTien(tongTien);
 
-        // Check if bill exists
         if (!kiemTraMaHDTonTai(hd.getMaHoaDon())) {
             return false;
         }
 
-        // Check if employee exists
         if (!kiemTraNhanVienTonTai(hd.getMaNhanVien())) {
             return false;
         }
 
-        // Check if customer exists (if provided)
         if (hd.getMaKH() != null && !hd.getMaKH().trim().isEmpty() &&
                 !kiemTraKhachHangTonTai(hd.getMaKH())) {
             return false;
         }
 
-        // Check if all products exist
         for (ChiTietHoaDonDTO ct : danhSachChiTiet) {
             if (!kiemTraSanPhamTonTai(ct.getMaSanPham())) {
                 return false;
             }
         }
 
-        // Call DAL to perform the update
         return hdDAL.capNhatHoaDonVoiChiTiet(hd, danhSachChiTiet);
     }
 
-    // Helper method to check if product exists
     private boolean kiemTraSanPhamTonTai(String maSP) {
-        // Implement this based on your system
-        // Example:
         SanPhamDAL spDAL = new SanPhamDAL();
         return spDAL.getSanPhamById(maSP) != null;
     }
 
-    // Thay thế phương thức xóa bằng hủy
     public boolean huyHoaDon(String maHoaDon) {
         try {
-            // Kiểm tra xem hóa đơn đã hủy chưa
             HoaDonDTO hd = hdDAL.layHoaDonTheoMa(maHoaDon);
             if (hd == null || "DA_HUY".equals(hd.getTrangThai())) {
                 return false;
