@@ -7,23 +7,25 @@ public class KhachHangDTO {
     private double diemTichLuy;
     private String loaiKhach;
     private String sdt;
+    private String CCCD;
 
     public KhachHangDTO() {}
 
-    public KhachHangDTO(String maKH, String hoTen, String sdt) {
+   public KhachHangDTO(String maKH, String hoTen, String sdt, String CCCD) {
         this.maKH = maKH;
         this.hoTen = hoTen;
         this.sdt = sdt;
+        this.CCCD = CCCD;
     }
 
-    public KhachHangDTO(String maKH, String hoTen, double diemTichLuy, String loaiKhach, String sdt) {
+    public KhachHangDTO(String maKH, String hoTen, double diemTichLuy, String loaiKhach, String sdt, String CCCD) {
         this.maKH = maKH;
         this.hoTen = hoTen;
         this.diemTichLuy = diemTichLuy;
         this.loaiKhach = loaiKhach;
         this.sdt = sdt;
+        this.CCCD = CCCD;
     }
-
     public String getMaKH() {
         return maKH;
     }
@@ -62,5 +64,13 @@ public class KhachHangDTO {
 
     public void setSdt(String sdt) {
         this.sdt = sdt;
+    }
+
+    public String getCCCD() {
+        return CCCD;
+    }
+
+    public void setCCCD(String CCCD) {
+        this.CCCD = CCCD;
     }
 }
