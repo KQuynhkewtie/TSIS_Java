@@ -8,17 +8,18 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import BLL.NhanVienBLL;
+import BLL.NhaCungUngBLL;
 import BLL.PhieuNhapHangBLL;
-import DTO.PhieuNhapHangDTO;
-import DTO.ChiTietPhieuNhapHangDTO;
+import DTO.*;
 import helper.PDFGeneratorPNH;
-import DTO.currentuser;
 
 public class TTCT_PNH extends BasePanel {
     private DefaultTableModel tableModel;
     private JLabel lblMaPNH, lblMaNV, lblMaNCU, lblNgay, lblTongTien;
     private PhieuNhapHangBLL pnhBLL = new PhieuNhapHangBLL();
-    private PDFGeneratorPNH pdfGenerator = new PDFGeneratorPNH();
+    private NhanVienBLL nvBLL = new NhanVienBLL();
+    private NhaCungUngBLL ncuBLL = new NhaCungUngBLL();
     private String maPNH;
     private JTable table;
 
@@ -269,11 +270,16 @@ public class TTCT_PNH extends BasePanel {
                     .collect(Collectors.toList());
             Map<String, String> tenSanPhamMap = pnhBLL.layDanhSachTenSanPham(danhSachMaSP);
 
+            NhaCungUngDTO nhaCungUng = ncuBLL.getNCUById(pnh.getMaNCU().trim());
+            NhanVienDTO nhanVien = nvBLL.getNhanVienByID(pnh.getMaNhanVien().trim());
+
             new PDFGeneratorPNH().exportPhieuNhapToPDF(
                     (JFrame)SwingUtilities.getWindowAncestor(this),
                     pnh,
                     chiTiet,
-                    tenSanPhamMap
+                    tenSanPhamMap,
+                    nhaCungUng,
+                    nhanVien
             );
         });
 
