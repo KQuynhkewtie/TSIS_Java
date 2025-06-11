@@ -23,6 +23,8 @@ public class HoaDon extends BasePanel {
     private JComboBox<String> cboTrangThai;
     private Timer searchTimer;
 
+
+
     public HoaDon(MainFrame mainFrame) {
         super(mainFrame);
         initUniqueComponents();
@@ -38,7 +40,6 @@ public class HoaDon extends BasePanel {
         highlightMenuButton("Hóa đơn");
         refreshData();
     }
-
     protected void initUniqueComponents() {
 
         JLabel lblHD = new JLabel("Hóa đơn", SwingConstants.LEFT);
@@ -106,7 +107,6 @@ public class HoaDon extends BasePanel {
             }
         });
 
-        // Thêm DocumentListener cho tìm kiếm real-time
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -139,7 +139,7 @@ public class HoaDon extends BasePanel {
             searchTimer.stop();
         }
 
-        searchTimer = new Timer(500, new ActionListener() { // 500ms delay
+        searchTimer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 performSearch();
@@ -181,41 +181,41 @@ public class HoaDon extends BasePanel {
         add(lblToDate);
 
         dateChooserTo = new JDateChooser();
-        dateChooserTo.setBounds(330, yPos, 150, 25);
+        dateChooserTo.setBounds(300, yPos, 150, 25);
         dateChooserTo.setDateFormatString("dd-MM-yyyy");
         add(dateChooserTo);
 
         yPos += 35;
 
-        JLabel lblMinAmount = new JLabel("Từ tiền:");
-        lblMinAmount.setBounds(20, yPos, 60, 25);
+        JLabel lblMinAmount = new JLabel("Tổng tiền từ:");
+        lblMinAmount.setBounds(20, yPos, 80, 25);
         add(lblMinAmount);
 
         txtMinAmount = new JTextField();
-        txtMinAmount.setBounds(70, yPos, 150, 25);
+        txtMinAmount.setBounds(100, yPos, 120, 25);
         add(txtMinAmount);
 
-        JLabel lblMaxAmount = new JLabel("Đến tiền:");
-        lblMaxAmount.setBounds(240, yPos, 70, 25);
+        JLabel lblMaxAmount = new JLabel("Tổng tiền đến:");
+        lblMaxAmount.setBounds(240, yPos, 100, 25);
         add(lblMaxAmount);
 
         txtMaxAmount = new JTextField();
-        txtMaxAmount.setBounds(330, yPos, 150, 25);
+        txtMaxAmount.setBounds(330, yPos, 120, 25);
         add(txtMaxAmount);
+
 
         yPos += 35;
         JLabel lblTrangThai = new JLabel("Trạng thái:");
         lblTrangThai.setBounds(20, yPos, 70, 25);
         add(lblTrangThai);
 
-        cboTrangThai = new JComboBox<>(new String[] { "Tất cả", "Bình thường", "Đã hủy" });
+        cboTrangThai = new JComboBox<>(new String[]{"Tất cả", "Bình thường", "Đã hủy"});
         cboTrangThai.setBounds(90, yPos, 150, 25);
         add(cboTrangThai);
     }
 
     private void initTable() {
-        String[] columnNames = { "Mã hóa đơn", "Mã nhân viên", "Mã khách hàng", "Ngày bán", "Thành tiền",
-                "Trạng thái" };
+        String[] columnNames = {"Mã hóa đơn", "Mã nhân viên", "Mã khách hàng", "Ngày bán", "Thành tiền", "Trạng thái"};
         model = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -285,6 +285,14 @@ public class HoaDon extends BasePanel {
         String toDate = "";
 
         try {
+            if (dateChooserFrom.getDate() != null && dateChooserTo.getDate() != null) {
+                if (dateChooserFrom.getDate().after(dateChooserTo.getDate())) {
+                    JOptionPane.showMessageDialog(this,
+                            "'Từ ngày' phải nhỏ hơn hoặc bằng 'Đến ngày'",
+                            "Lỗi nhập liệu", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
             if (dateChooserFrom.getDate() != null) {
                 fromDate = sdf.format(dateChooserFrom.getDate());
             }
@@ -299,8 +307,6 @@ public class HoaDon extends BasePanel {
         Double minAmount = null;
         Double maxAmount = null;
 
-        String trangThai = cboTrangThai.getSelectedItem().toString();
-
         try {
             if (!txtMinAmount.getText().isEmpty()) {
                 minAmount = Double.parseDouble(txtMinAmount.getText());
@@ -308,10 +314,18 @@ public class HoaDon extends BasePanel {
             if (!txtMaxAmount.getText().isEmpty()) {
                 maxAmount = Double.parseDouble(txtMaxAmount.getText());
             }
+            if (minAmount != null && maxAmount != null && minAmount > maxAmount) {
+                JOptionPane.showMessageDialog(this,
+                        "'Tổng tiền từ' phải nhỏ hơn hoặc bằng 'Tổng tiền đến'!",
+                        "Lỗi nhập liệu", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập số tiền hợp lệ!");
             return;
         }
+
+        String trangThai = cboTrangThai.getSelectedItem().toString();
 
         searchHoaDon(keyword, fromDate, toDate, minAmount, maxAmount, trangThai);
     }
@@ -323,10 +337,9 @@ public class HoaDon extends BasePanel {
     }
 
     private void searchHoaDon(String keyword, String fromDate, String toDate,
-            Double minAmount, Double maxAmount, String trangThai) {
+                              Double minAmount, Double maxAmount, String trangThai) {
         model.setRowCount(0);
 
-        // Chuyển đổi giá trị trạng thái từ combobox sang giá trị DB
         String dbTrangThai = null;
         if ("Bình thường".equals(trangThai)) {
             dbTrangThai = "BINH_THUONG";

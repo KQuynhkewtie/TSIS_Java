@@ -18,7 +18,6 @@ public class KhachHang extends BasePanel {
         super(mainFrame);
         initUniqueComponents();
     }
-
     @Override
     public void refreshData() {
         loadKhachHang();
@@ -71,13 +70,15 @@ public class KhachHang extends BasePanel {
             }
         });
 
+
         JButton btnThemKH = new JButton("+ Thêm Khách hàng");
         btnThemKH.setBounds(620, 70, 150, 30);
         btnThemKH.setBackground(Color.decode("#F0483E"));
         btnThemKH.setForeground(Color.WHITE);
         add(btnThemKH);
 
-        String[] columnNames = { "Mã khách hàng", "Tên khách hàng", "Điểm tích lũy", "Loại khách hàng", "SĐT" };
+
+        String[] columnNames = {"Mã khách hàng", "Tên khách hàng", "Điểm tích lũy", "Loại khách hàng", "SĐT"};
         model = new DefaultTableModel(columnNames, 0);
         table = new JTable(model);
         table.getTableHeader().setPreferredSize(new Dimension(0, 35));
@@ -106,8 +107,8 @@ public class KhachHang extends BasePanel {
                         KhachHangDTO kh = bllkhachhang.getKhachHangById(maKhachHang);
                         if (kh != null) {
                             TTCT_KH ttctKhPage = mainFrame.getPage("ttctkh", TTCT_KH.class);
-                            ttctKhPage.setThongTin(kh.getMaKH(), kh.getHoTen(),
-                                    kh.getDiemTichLuy(), kh.getLoaiKhach(), kh.getSdt());
+                            ttctKhPage.setThongTin( kh.getMaKH(), kh.getHoTen(),
+                                    kh.getDiemTichLuy(), kh.getLoaiKhach(),kh.getSdt(), kh.getCCCD());
                             mainFrame.showPage("ttctkh");
                         }
                     }
@@ -120,8 +121,7 @@ public class KhachHang extends BasePanel {
         model.setRowCount(0);
         List<KhachHangDTO> list = bllkhachhang.getAllKhachHang();
         for (KhachHangDTO kh : list) {
-            model.addRow(
-                    new Object[] { kh.getMaKH(), kh.getHoTen(), kh.getDiemTichLuy(), kh.getLoaiKhach(), kh.getSdt() });
+            model.addRow(new Object[]{ kh.getMaKH(), kh.getHoTen(),kh.getDiemTichLuy(), kh.getLoaiKhach(), kh.getSdt(), kh.getCCCD()});
         }
     }
 
@@ -136,10 +136,7 @@ public class KhachHang extends BasePanel {
         List<KhachHangDTO> list = bllkhachhang.getKhachHang(keyword);
 
         for (KhachHangDTO kh : list) {
-            model.addRow(
-                    new Object[] { kh.getMaKH(), kh.getHoTen(), kh.getDiemTichLuy(), kh.getLoaiKhach(), kh.getSdt() });
+            model.addRow(new Object[]{ kh.getMaKH(),kh.getHoTen(), kh.getDiemTichLuy(), kh.getLoaiKhach(),kh.getSdt(), kh.getCCCD()});
         }
-        System.out.println("Từ khóa tìm kiếm: " + keyword);
-        System.out.println("Số khách hàng tìm thấy: " + list.size());
     }
 }
