@@ -22,7 +22,8 @@ public class KhachHangDAL {
                         rs.getString("HOTEN"),
                         rs.getDouble("DIEMTICHLUY"),
                         rs.getString("LOAIKHACH"),
-                        rs.getString("SDT")
+                        rs.getString("SDT"),
+                        rs.getString("CCCD")
                 );
                 ds.add(kh);
             }
@@ -45,9 +46,10 @@ public class KhachHangDAL {
                 kh = new KhachHangDTO(
                         rs.getString("MAKH"),
                         rs.getString("HOTEN"),
-                        rs.getInt("DIEMTICHLUY"),
+                        rs.getDouble("DIEMTICHLUY"),
                         rs.getString("LOAIKHACH"),
-                        rs.getString("SDT")
+                        rs.getString("SDT"),
+                        rs.getString("CCCD")
                 );
             }
         } catch (SQLException e) {
@@ -58,7 +60,7 @@ public class KhachHangDAL {
     }
 
     public boolean insertKhachHang(KhachHangDTO kh) {
-        String sql = "INSERT INTO KHACHHANG (MAKH, HOTEN, SDT) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO KHACHHANG (MAKH, HOTEN, SDT, CCCD) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DatabaseHelper.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -66,7 +68,7 @@ public class KhachHangDAL {
             stmt.setString(1, kh.getMaKH());
             stmt.setString(2, kh.getHoTen());
             stmt.setString(3, kh.getSdt());
-
+            stmt.setString(4, kh.getCCCD());
 
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -77,7 +79,7 @@ public class KhachHangDAL {
 
     public List<KhachHangDTO> getKhachHang(String keyword) {
         List<KhachHangDTO> danhSachKH = new ArrayList<>();
-        String sql = "SELECT * FROM KHACHHANG WHERE LOWER(HOTEN) LIKE ? OR LOWER(MAKH) LIKE ?  OR DIEMTICHLUY LIKE ? OR LOWER(LOAIKHACH) LIKE ? OR SDT LIKE ?";
+        String sql = "SELECT * FROM KHACHHANG WHERE LOWER(HOTEN) LIKE ? OR LOWER(MAKH) LIKE ?  OR DIEMTICHLUY LIKE ? OR LOWER(LOAIKHACH) LIKE ? OR SDT LIKE ? OR CCCD LIKE ?";
 
         try (Connection conn = DatabaseHelper.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -86,6 +88,7 @@ public class KhachHangDAL {
             stmt.setString(3, "%" + keyword+ "%");
             stmt.setString(4, "%" + keyword.toLowerCase() + "%");
             stmt.setString(5, "%" + keyword+ "%");
+            stmt.setString(6, "%" + keyword+ "%");
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -94,7 +97,8 @@ public class KhachHangDAL {
                         rs.getString("HOTEN"),
                         rs.getDouble("DIEMTICHLUY"),
                         rs.getString("LOAIKHACH"),
-                        rs.getString("SDT")
+                        rs.getString("SDT"),
+                        rs.getString("CCCD")
                 );
                 danhSachKH.add(kh);
             }
@@ -105,7 +109,7 @@ public class KhachHangDAL {
     }
 
     public boolean updateKhachHang(KhachHangDTO kh) {
-        String sql = "UPDATE KHACHHANG SET HOTEN=?, DIEMTICHLUY=?, SDT=? WHERE TRIM(MAKH) = ?";
+        String sql = "UPDATE KHACHHANG SET HOTEN=?, DIEMTICHLUY=?, SDT=?, CCCD=? WHERE TRIM(MAKH) = ?";
 
         try (Connection conn = DatabaseHelper.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -113,10 +117,12 @@ public class KhachHangDAL {
             stmt.setString(1, kh.getHoTen());
             stmt.setDouble(2, kh.getDiemTichLuy());
             stmt.setString(3, kh.getSdt());
-            stmt.setString(4, kh.getMaKH().trim());
+            stmt.setString(4, kh.getCCCD());
+            stmt.setString(5, kh.getMaKH().trim());
 
 
             int rows = stmt.executeUpdate();
+            System.out.println("Rows affected: " + rows);
 
             return rows > 0;
 
@@ -137,6 +143,7 @@ public class KhachHangDAL {
         }
         return false;
     }
+
 
     public int getTongKH() {
         String sql = "SELECT COUNT(*) FROM KHACHHANG";
