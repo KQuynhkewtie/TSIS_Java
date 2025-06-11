@@ -103,7 +103,6 @@ public class PhieuNhapHang extends BasePanel {
             }
         });
 
-
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -126,7 +125,7 @@ public class PhieuNhapHang extends BasePanel {
             searchTimer.stop();
         }
 
-        searchTimer = new Timer(500, new ActionListener() { 
+        searchTimer = new Timer(500, new ActionListener() { //500ms delay
             @Override
             public void actionPerformed(ActionEvent e) {
                 performSearch();
@@ -166,26 +165,26 @@ public class PhieuNhapHang extends BasePanel {
         add(lblToDate);
 
         dateChooserTo = new JDateChooser();
-        dateChooserTo.setBounds(330, yPos, 150, 25);
+        dateChooserTo.setBounds(300, yPos, 150, 25);
         dateChooserTo.setDateFormatString("dd-MM-yyyy");
         add(dateChooserTo);
 
         yPos += 35;
 
-        JLabel lblMinAmount = new JLabel("Từ tiền:");
-        lblMinAmount.setBounds(20, yPos, 60, 25);
+        JLabel lblMinAmount = new JLabel("Tổng tiền từ:");
+        lblMinAmount.setBounds(20, yPos, 80, 25);
         add(lblMinAmount);
 
         txtMinAmount = new JTextField();
-        txtMinAmount.setBounds(70, yPos, 150, 25);
+        txtMinAmount.setBounds(100, yPos, 120, 25);
         add(txtMinAmount);
 
-        JLabel lblMaxAmount = new JLabel("Đến tiền:");
-        lblMaxAmount.setBounds(240, yPos, 70, 25);
+        JLabel lblMaxAmount = new JLabel("Tổng tiền đến:");
+        lblMaxAmount.setBounds(240, yPos, 100, 25);
         add(lblMaxAmount);
 
         txtMaxAmount = new JTextField();
-        txtMaxAmount.setBounds(330, yPos, 150, 25);
+        txtMaxAmount.setBounds(330, yPos, 120, 25);
         add(txtMaxAmount);
     }
 
@@ -244,6 +243,15 @@ public class PhieuNhapHang extends BasePanel {
         String toDate = "";
 
         try {
+            if (dateChooserFrom.getDate() != null && dateChooserTo.getDate() != null) {
+                if (dateChooserFrom.getDate().after(dateChooserTo.getDate())) {
+                    JOptionPane.showMessageDialog(this,
+                            "'Từ ngày' phải nhỏ hơn hoặc bằng 'Đến ngày'",
+                            "Lỗi nhập liệu", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
             if (dateChooserFrom.getDate() != null) {
                 fromDate = sdf.format(dateChooserFrom.getDate());
             }
@@ -264,6 +272,12 @@ public class PhieuNhapHang extends BasePanel {
             }
             if (!txtMaxAmount.getText().isEmpty()) {
                 maxAmount = Double.parseDouble(txtMaxAmount.getText());
+            }
+            if (minAmount != null && maxAmount != null && minAmount > maxAmount) {
+                JOptionPane.showMessageDialog(this,
+                        "'Tổng tiền từ' phải nhỏ hơn hoặc bằng 'Tổng tiền đến'!",
+                        "Lỗi nhập liệu", JOptionPane.ERROR_MESSAGE);
+                return;
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập số tiền hợp lệ!");
