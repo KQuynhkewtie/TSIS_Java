@@ -9,19 +9,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import DAL.NhaCungUngDAL;
+import DTO.*;
 import com.toedter.calendar.JDateChooser;
 import BLL.PhieuNhapHangBLL;
-import DTO.PhieuNhapHangDTO;
-import DTO.ChiTietPhieuNhapHangDTO;
 import DAL.SanPhamDAL;
-import DTO.SanPhamDTO;
-import DTO.currentuser;
 
 public class CapNhatTT_PNH extends BasePanel {
     private DefaultTableModel tableModel;
     private JTextField txtMaNCU, txtMaNV, txtMaPNH;
     private JDateChooser dateChooserNgay;
     private PhieuNhapHangBLL pnhBLL = new PhieuNhapHangBLL();
+    private NhaCungUngDAL ncuDAL = new NhaCungUngDAL();
     private String maPNH;
     private SanPhamDAL spDAL = new SanPhamDAL();
     private Runnable onUpdateSuccessCallback;
@@ -59,7 +58,6 @@ public class CapNhatTT_PNH extends BasePanel {
         lblArrow.setBounds(460, 20, 900, 30);
         add(lblArrow);
 
-        
         lblTTPNHLink.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -89,9 +87,9 @@ public class CapNhatTT_PNH extends BasePanel {
         add(lblMaPNHLabel);
         txtMaPNH = new JTextField();
         txtMaPNH.setBounds(20, 110, 300, 30);
-        txtMaPNH.setBackground(new Color(230, 230, 230)); 
+        txtMaPNH.setBackground(new Color(230, 230, 230));
         txtMaPNH.setEditable(false);
-        txtMaPNH.setFocusable(false); 
+        txtMaPNH.setFocusable(false);
         add(txtMaPNH);
 
         JLabel lblMNV = new JLabel("Mã nhân viên:");
@@ -101,12 +99,19 @@ public class CapNhatTT_PNH extends BasePanel {
         txtMaNV.setBounds(460, 110, 300, 30);
         add(txtMaNV);
 
-        JLabel lblMNCU = new JLabel("Mã nhà cung ứng:");
+        JLabel lblMNCU = new JLabel("Nhà cung ứng:");
         lblMNCU.setBounds(20, 160, 150, 25);
         add(lblMNCU);
         txtMaNCU = new JTextField();
-        txtMaNCU.setBounds(20, 190, 300, 30);
+        txtMaNCU.setBounds(20, 190, 250, 30);
         add(txtMaNCU);
+
+        JButton btnChonNCU = new JButton("Chọn");
+        btnChonNCU.setBounds(280, 190, 80, 30);
+        btnChonNCU.setBackground(Color.decode("#F0483E"));
+        btnChonNCU.setForeground(Color.WHITE);
+        btnChonNCU.addActionListener(e -> hienThiDanhSachNhaCungUng());
+        add(btnChonNCU);
 
         JLabel lblngay = new JLabel("Ngày lập phiếu:");
         lblngay.setBounds(460, 160, 150, 25);
@@ -132,13 +137,12 @@ public class CapNhatTT_PNH extends BasePanel {
             }
         };
 
-        table = new JTable(tableModel); 
+        table = new JTable(tableModel);
         table.getTableHeader().setPreferredSize(new Dimension(0, 35));
         table.setRowHeight(30);
         table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
         table.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        
         DefaultTableCellRenderer numberRenderer = new DefaultTableCellRenderer() {
             @Override
             public void setValue(Object value) {
@@ -194,7 +198,7 @@ public class CapNhatTT_PNH extends BasePanel {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                if (column < 2) { 
+                if (column < 2) {
                     c.setBackground(new Color(240, 240, 240));
                 } else {
                     c.setBackground(Color.WHITE);
@@ -207,7 +211,6 @@ public class CapNhatTT_PNH extends BasePanel {
             table.getColumnModel().getColumn(i).setCellRenderer(nonEditableRenderer);
         }
 
-        
         table.setDefaultEditor(Object.class, new DefaultCellEditor(new JTextField()) {
             @Override
             public boolean stopCellEditing() {
@@ -215,9 +218,9 @@ public class CapNhatTT_PNH extends BasePanel {
                     String value = getCellEditorValue().toString().trim();
                     if (!value.isEmpty()) {
                         int col = table.getSelectedColumn();
-                        if (col == 2) { 
+                        if (col == 2) {
                             Integer.parseInt(value.replaceAll("[^\\d]", ""));
-                        } else if (col == 3) { 
+                        } else if (col == 3) {
                             Double.parseDouble(value.replaceAll("[^\\d.]", ""));
                         }
                     }
@@ -235,20 +238,19 @@ public class CapNhatTT_PNH extends BasePanel {
     }
 
     private void initActionButtons() {
-       
-        JButton btnThemDong = new JButton("Thêm dòng");
-        btnThemDong.setBounds(600, 500, 100, 30);
+        JButton btnThemDong = new JButton("Thêm sản phẩm");
+        btnThemDong.setBounds(600, 500, 130, 30);
         btnThemDong.setBackground(Color.decode("#F5A623"));
         btnThemDong.setForeground(Color.WHITE);
         btnThemDong.addActionListener(e -> hienThiDanhSachSanPham());
         add(btnThemDong);
 
-        JButton btnXoaDong = new JButton("Xóa dòng");
-        btnXoaDong.setBounds(600, 540, 100, 30);
+        JButton btnXoaDong = new JButton("Xóa sản phẩm");
+        btnXoaDong.setBounds(600, 540, 130, 30);
         btnXoaDong.setForeground(Color.WHITE);
         btnXoaDong.setBackground(Color.decode("#D0021B"));
         btnXoaDong.addActionListener(e -> {
-            int row = table.getSelectedRow(); 
+            int row = table.getSelectedRow();
             if (row != -1) {
                 tableModel.removeRow(row);
             } else {
@@ -258,7 +260,7 @@ public class CapNhatTT_PNH extends BasePanel {
         add(btnXoaDong);
 
         JButton btnLuu = new JButton("Lưu");
-        btnLuu.setBounds(600, 580, 100, 30);
+        btnLuu.setBounds(600, 580, 130, 30);
         btnLuu.setBackground(Color.decode("#F0483E"));
         btnLuu.setForeground(Color.WHITE);
 
@@ -274,7 +276,38 @@ public class CapNhatTT_PNH extends BasePanel {
         setDefaultButtonSafe(btnLuu);
     }
 
-    
+    private void hienThiDanhSachNhaCungUng() {
+        JDialog dialog = new JDialog((JFrame)SwingUtilities.getWindowAncestor(this), "Chọn nhà cung ứng", true);
+        dialog.setSize(700, 500);
+        dialog.setSize(400, 300);
+        dialog.setLocationRelativeTo(this);
+
+        List<NhaCungUngDTO> ncuList = ncuDAL.getAllNCU();
+        String[] columnNames = {"Mã NCU", "Tên NCU"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+        for (NhaCungUngDTO ncu : ncuList) {
+            model.addRow(new Object[]{ncu.getMaNCU().trim(), ncu.getTenNCU()});
+        }
+
+        JTable table = new JTable(model);
+        table.getTableHeader().setPreferredSize(new Dimension(0, 25));
+        table.setRowHeight(25);
+        JScrollPane scrollPane = new JScrollPane(table);
+        dialog.add(scrollPane);
+
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int selectedRow = table.getSelectedRow();
+                txtMaNCU.setText(model.getValueAt(selectedRow, 0).toString());
+                dialog.dispose();
+            }
+        });
+
+        dialog.setVisible(true);
+    }
+
     private void hienThiDanhSachSanPham() {
         JDialog dialog = new JDialog((JFrame)SwingUtilities.getWindowAncestor(this), "Chọn sản phẩm", true);
         dialog.setSize(700, 500);
@@ -300,7 +333,7 @@ public class CapNhatTT_PNH extends BasePanel {
         buttonPanel.add(btnChon);
         buttonPanel.add(btnHuy);
         dialog.add(buttonPanel, BorderLayout.SOUTH);
-       
+
         loadSanPhamData(model, "");
 
         txtSearch.addFocusListener(new FocusListener() {
@@ -362,20 +395,19 @@ public class CapNhatTT_PNH extends BasePanel {
             }
         });
 
-      
         btnHuy.addActionListener(e -> dialog.dispose());
 
         dialog.setVisible(true);
     }
 
     private void loadSanPhamData(DefaultTableModel model, String keyword) {
-        model.setRowCount(0); 
+        model.setRowCount(0);
 
         List<SanPhamDTO> spList;
         if (keyword.isEmpty() || keyword.equals("Tìm kiếm sản phẩm")) {
-            spList = spDAL.getAllSanPham(); 
+            spList = spDAL.getAllSanPham();
         } else {
-            spList = spDAL.getSanPham(keyword); 
+            spList = spDAL.getSanPham(keyword);
         }
 
         for (SanPhamDTO sp : spList) {
@@ -421,9 +453,9 @@ public class CapNhatTT_PNH extends BasePanel {
         }
     }
 
-    private void luuPhieuNhapHang() {        
+    private void luuPhieuNhapHang() {
         if (txtMaNCU.getText().trim().isEmpty() || txtMaNV.getText().trim().isEmpty() ||
-                dateChooserNgay.getDate() == null) {  
+                dateChooserNgay.getDate() == null) {  // Changed validation
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
