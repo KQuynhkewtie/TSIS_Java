@@ -1,5 +1,6 @@
 package GUI;
 
+
 import javax.swing.*;
 
 import DTO.KhachHangDTO;
@@ -15,14 +16,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Them_KH extends BasePanel {
-    private JTextField txtMaKH, txtHoTen, txtsdt, txtDiemTL, txtLoaiKH;
-    private KhachHangBLL khBLL = new KhachHangBLL();
-
+    private JTextField txtMaKH, txtHoTen, txtsdt, txtDiemTL, txtLoaiKH, txtcccd;
+    private KhachHangBLL khBLL= new KhachHangBLL();
     public Them_KH(MainFrame mainFrame) {
         super(mainFrame);
         initUniqueComponents();
     }
-
     @Override
     public void onPageShown() {
         highlightMenuButton("Khách hàng");
@@ -31,6 +30,7 @@ public class Them_KH extends BasePanel {
         txtsdt.setText("");
         txtDiemTL.setText("0.0");
         txtLoaiKH.setText("Bình thường");
+        txtcccd.setText((""));
     }
 
     protected void initUniqueComponents() {
@@ -58,36 +58,40 @@ public class Them_KH extends BasePanel {
         txtMaKH = new JTextField();
         txtMaKH.setBounds(200, 80, 200, 30);
         add(txtMaKH);
-
         JLabel lblHoTen = new JLabel("Họ tên:");
         lblHoTen.setBounds(20, 130, 150, 30);
         add(lblHoTen);
         txtHoTen = new JTextField();
         txtHoTen.setBounds(200, 130, 200, 30);
         add(txtHoTen);
-
         JLabel lblsdt = new JLabel("Số diện thoại:");
         lblsdt.setBounds(20, 180, 150, 30);
         add(lblsdt);
         txtsdt = new JTextField();
         txtsdt.setBounds(200, 180, 200, 30);
         add(txtsdt);
+        JLabel lblCCCD = new JLabel("CCCD:");
+        lblCCCD.setBounds(20, 230, 150, 30);
+        add(lblCCCD);
+        txtcccd = new JTextField();
+        txtcccd.setBounds(200, 230, 200, 30);
+        add(txtcccd);
 
         JLabel lblDiemTL = new JLabel("Điểm tích lũy:");
-        lblDiemTL.setBounds(20, 230, 150, 30);
+        lblDiemTL.setBounds(20, 280, 150, 30);
         add(lblDiemTL);
         txtDiemTL = new JTextField("0.0");
-        txtDiemTL.setBounds(200, 230, 200, 30);
+        txtDiemTL.setBounds(200, 280, 200, 30);
         txtDiemTL.setEditable(false);
         txtDiemTL.setFocusable(false);
         txtDiemTL.setBackground(new Color(230, 230, 230));
         add(txtDiemTL);
 
         JLabel lblLoaiKH = new JLabel("Loại khách hàng:");
-        lblLoaiKH.setBounds(20, 280, 150, 30);
+        lblLoaiKH.setBounds(20,330, 150, 30);
         add(lblLoaiKH);
         txtLoaiKH = new JTextField("Bình thường");
-        txtLoaiKH.setBounds(200, 280, 200, 30);
+        txtLoaiKH.setBounds(200, 330, 200, 30);
         txtLoaiKH.setEditable(false);
         txtLoaiKH.setFocusable(false);
         txtLoaiKH.setBackground(new Color(230, 230, 230));
@@ -111,6 +115,7 @@ public class Them_KH extends BasePanel {
                 String maKH = txtMaKH.getText().trim();
                 String tenKH = txtHoTen.getText().trim();
                 String SDT = txtsdt.getText().trim();
+                String CCCD = txtcccd.getText().trim();
 
                 if (maKH.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Vui lòng nhập mã khách hàng!", "Lỗi",
@@ -128,7 +133,7 @@ public class Them_KH extends BasePanel {
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                KhachHangDTO kh = new KhachHangDTO(maKH, tenKH, SDT);
+                KhachHangDTO kh = new KhachHangDTO(maKH, tenKH, SDT, CCCD);
                 try {
                     boolean result = khBLL.insertKhachHang(kh);
                     if (result) {
@@ -146,7 +151,15 @@ public class Them_KH extends BasePanel {
             }
         });
 
-        setDefaultButtonSafe(btnLuu);
+        getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "saveAction");
+
+        getActionMap().put("saveAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnLuu.doClick();
+            }
+        });
 
         JTextField[] textFields = { txtMaKH, txtHoTen, txtsdt };
 
@@ -171,5 +184,4 @@ public class Them_KH extends BasePanel {
             });
         }
     }
-
 }

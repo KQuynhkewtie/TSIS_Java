@@ -58,7 +58,6 @@ public class TTCT_NV extends BasePanel {
         txtMaNV.setForeground(Color.decode("#641A1F"));
         txtMaNV.setOpaque(false);
         add(txtMaNV);
-
         JLabel lblHoTen = new JLabel("Họ tên:");
         lblHoTen.setBounds(20, 160, 150, 25);
         add(lblHoTen);
@@ -98,6 +97,7 @@ public class TTCT_NV extends BasePanel {
         txtCCCD.setOpaque(false);
         add(txtCCCD);
 
+
         JLabel lblVTCV = new JLabel("Vị trí công việc:");
         lblVTCV.setBounds(460, 80, 150, 25);
         add(lblVTCV);
@@ -123,7 +123,6 @@ public class TTCT_NV extends BasePanel {
         txtMST.setForeground(Color.decode("#641A1F"));
         txtMST.setOpaque(false);
         add(txtMST);
-
         JLabel lblTT = new JLabel("Trạng thái:");
         lblTT.setBounds(460, 240, 150, 25);
         add(lblTT);
@@ -136,36 +135,31 @@ public class TTCT_NV extends BasePanel {
         txtTT.setForeground(Color.decode("#641A1F"));
         txtTT.setOpaque(false);
         add(txtTT);
-
         JButton btnXoa = new JButton("Xóa");
         btnXoa.setBounds(460, 490, 100, 40);
         btnXoa.setBackground(Color.decode("#F0483E"));
         btnXoa.setForeground(Color.WHITE);
         add(btnXoa);
 
+
         btnXoa.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!currentuser.coQuyen("Xóa nhân viên")) {
 
-                    JOptionPane.showMessageDialog(null, "Bạn không có quyền xóa!", "Cảnh báo",
-                            JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Bạn không có quyền xóa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa nhân viên này?", "Xác nhận xóa",
-                        JOptionPane.YES_NO_OPTION);
+                int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa nhân viên này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
                 if (result == JOptionPane.YES_OPTION) {
                     NhanVienBLL nvBLL = new NhanVienBLL();
-                    boolean xoaThanhCong = nvBLL.deleteNhanVien(txtMaNV.getText());
-                    ;
+                    boolean xoaThanhCong = nvBLL.deleteNhanVien(txtMaNV.getText());;
                     if (xoaThanhCong) {
-                        JOptionPane.showMessageDialog(null, "Đã xóa nhân viên thành công!", "Thông báo",
-                                JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Đã xóa nhân viên thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         mainFrame.getPage("nhanvien", NhanVien.class).refreshData();
                         mainFrame.showPage("nhanvien");
                     } else {
-                        JOptionPane.showMessageDialog(null, "Xóa thất bại. Nhân viên có thể đã liên kết dữ liệu khác.",
-                                "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Xóa thất bại. Nhân viên có thể đã liên kết dữ liệu khác.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
@@ -187,12 +181,12 @@ public class TTCT_NV extends BasePanel {
             }
         });
 
+
         setVisible(true);
 
     }
-
     public void setThongTin(String maNV, String tenNV, String CCCD, String SDT, String vitri,
-            String mst, String trangthai) {
+                            String mst, String trangthai) {
         txtMaNV.setText(maNV);
         txtTenNV.setText(tenNV);
         txtCCCD.setText(CCCD);

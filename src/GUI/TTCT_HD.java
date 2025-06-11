@@ -1,11 +1,10 @@
 package GUI;
 
 import BLL.HoaDonBLL;
-import DTO.HoaDonDTO;
-import DTO.ChiTietHoaDonDTO;
+import BLL.NhanVienBLL;
+import DTO.*;
 import helper.PDFGeneratorHD;
-import DTO.currentuser;
-
+import BLL.KhachHangBLL;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -17,6 +16,8 @@ import java.util.stream.Collectors;
 
 public class TTCT_HD extends BasePanel {
     private HoaDonBLL hdBLL = new HoaDonBLL();
+    private KhachHangBLL khBLL = new KhachHangBLL();
+    private NhanVienBLL nvBLL = new NhanVienBLL();
     private String maHoaDon;
     private DefaultTableModel tableModel;
     private JTable table;
@@ -26,8 +27,6 @@ public class TTCT_HD extends BasePanel {
         super(mainFrame);
         initUniqueComponents();
     }
-
-    // Method to set the bill ID after construction
     public void loadHoaDonInfo(String maHoaDon) {
         this.maHoaDon = maHoaDon;
         if (maHoaDon != null && !maHoaDon.trim().isEmpty()) {
@@ -43,6 +42,7 @@ public class TTCT_HD extends BasePanel {
     protected void initUniqueComponents() {
 
         initHeaderSection();
+
         initInfoForm();
 
         initProductTable();
@@ -51,7 +51,6 @@ public class TTCT_HD extends BasePanel {
 
         initUpdateButton();
 
-        // Thêm kiểm tra nếu có maHoaDon thì mới load data
         if (maHoaDon != null && !maHoaDon.trim().isEmpty()) {
             loadHoaDonData();
         }
@@ -165,7 +164,6 @@ public class TTCT_HD extends BasePanel {
 
         add(btnHuy);
     }
-
 
     private void initUpdateButton() {
         JButton btnCapNhat = new JButton("Cập nhật");
@@ -329,14 +327,16 @@ public class TTCT_HD extends BasePanel {
                         "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             List<String> danhSachMaSP = chiTiet.stream()
                     .map(ChiTietHoaDonDTO::getMaSanPham)
                     .collect(Collectors.toList());
             Map<String, String> tenSanPhamMap = hdBLL.layDanhSachTenSanPham(danhSachMaSP);
 
-            // Gọi phương thức xuất PDF với đầy đủ tham số
-            new PDFGeneratorHD().exportHoaDonToPDF((JFrame)SwingUtilities.getWindowAncestor(this), hd, chiTiet, tenSanPhamMap);
+            KhachHangDTO kh = khBLL.getKhachHangById(hd.getMaKH().trim());
+            NhanVienDTO nv = nvBLL.getNhanVienByID(hd.getMaNhanVien().trim());
+
+            new PDFGeneratorHD().exportHoaDonToPDF((JFrame)SwingUtilities.getWindowAncestor(this), hd, chiTiet, tenSanPhamMap, nv, kh);
         });
 
         add(btnExportPDF);

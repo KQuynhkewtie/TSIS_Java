@@ -1,5 +1,4 @@
 package GUI;
-
 import javax.swing.*;
 
 import BLL.KhachHangBLL;
@@ -12,7 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class TTCT_KH extends BasePanel {
-	private JTextArea txtHoTen, txtMaKH, txtDiemTL, txtsdt, txtLoaiKH;
+	private JTextArea txtHoTen, txtMaKH, txtDiemTL, txtsdt, txtLoaiKH, txtcccd;
 
 	public TTCT_KH(MainFrame mainFrame) {
 		super(mainFrame);
@@ -83,11 +82,24 @@ public class TTCT_KH extends BasePanel {
 		txtsdt.setOpaque(false);
 		add(txtsdt);
 
+		JLabel lblCCCD = new JLabel("CCCD:");
+		lblCCCD.setBounds(20, 230, 150, 30);
+		add(lblCCCD);
+		txtcccd = new JTextArea();
+		txtcccd.setBounds(200, 230, 200, 30);
+		txtcccd.setLineWrap(true);
+		txtcccd.setWrapStyleWord(true);
+		txtcccd.setEditable(false);
+		txtcccd.setFont(new Font("Arial", Font.BOLD, 20));
+		txtcccd.setForeground(Color.decode("#641A1F"));
+		txtcccd.setOpaque(false);
+		add(txtcccd);
+
 		JLabel lblDiemTL = new JLabel("Điểm tích lũy:");
-		lblDiemTL.setBounds(20, 230, 150, 30);
+		lblDiemTL.setBounds(20, 280, 150, 30);
 		add(lblDiemTL);
 		txtDiemTL = new JTextArea();
-		txtDiemTL.setBounds(200, 230, 200, 30);
+		txtDiemTL.setBounds(200, 280, 200, 30);
 		txtDiemTL.setLineWrap(true);
 		txtDiemTL.setWrapStyleWord(true);
 		txtDiemTL.setEditable(false);
@@ -96,11 +108,11 @@ public class TTCT_KH extends BasePanel {
 		txtDiemTL.setOpaque(false);
 		add(txtDiemTL);
 
-		JLabel lblLoaiKH = new JLabel("Loại khách hàng:");
-		lblLoaiKH.setBounds(20, 280, 150, 30);
+		JLabel lblLoaiKH = new JLabel("Mã loại khách hàng:");
+		lblLoaiKH.setBounds(20, 330, 150, 30);
 		add(lblLoaiKH);
 		txtLoaiKH = new JTextArea();
-		txtLoaiKH.setBounds(200, 280, 200, 30);
+		txtLoaiKH.setBounds(200, 330, 200, 30);
 		txtLoaiKH.setLineWrap(true);
 		txtLoaiKH.setWrapStyleWord(true);
 		txtLoaiKH.setEditable(false);
@@ -108,7 +120,6 @@ public class TTCT_KH extends BasePanel {
 		txtLoaiKH.setForeground(Color.decode("#641A1F"));
 		txtLoaiKH.setOpaque(false);
 		add(txtLoaiKH);
-
 		JButton btnXoa = new JButton("Xóa");
 		btnXoa.setBounds(450, 480, 100, 40);
 		btnXoa.setBackground(Color.decode("#F0483E"));
@@ -161,12 +172,13 @@ public class TTCT_KH extends BasePanel {
 		setVisible(true);
 	}
 
-	public void setThongTin(String maKH, String tenKH, Double DTL, String maLKH, String sdt) {
+	public void setThongTin(String maKH, String tenKH, Double DTL, String maLKH, String sdt, String cccd) {
 		txtMaKH.setText(maKH);
 		txtHoTen.setText(tenKH);
 		txtDiemTL.setText(String.valueOf(DTL));
 		txtLoaiKH.setText(maLKH);
 		txtsdt.setText(sdt);
+		txtcccd.setText(cccd);
 		revalidate();
 		repaint();
 	}

@@ -26,7 +26,7 @@ public class Them_NV extends BasePanel {
     @Override
     public void onPageShown() {
         highlightMenuButton("Nhân viên");
-        txtMaNV.setText("");
+        //txtMaNV.setText("");
         txtHoTen.setText("");
         txtSDT.setText("");
         txtCCCD.setText("");
@@ -59,21 +59,18 @@ public class Them_NV extends BasePanel {
         JTextField txtMaNV = new JTextField();
         txtMaNV.setBounds(20, 110, 300, 30);
         add(txtMaNV);
-
         JLabel lblHoTen = new JLabel("Họ tên:");
         lblHoTen.setBounds(20, 160, 150, 25);
         add(lblHoTen);
         JTextField txtHoTen = new JTextField();
         txtHoTen.setBounds(20, 190, 300, 30);
         add(txtHoTen);
-
         JLabel lblSDT = new JLabel("Số điện thoại:");
         lblSDT.setBounds(20, 240, 150, 25);
         add(lblSDT);
         JTextField txtSDT = new JTextField();
         txtSDT.setBounds(20, 270, 300, 30);
         add(txtSDT);
-
         JLabel lblCCCD = new JLabel("CCCD:");
         lblCCCD.setBounds(20, 320, 150, 25);
         add(lblCCCD);
@@ -96,7 +93,6 @@ public class Them_NV extends BasePanel {
         groupVTCV = new ButtonGroup();
         groupVTCV.add(rbBanHang);
         groupVTCV.add(rbQuanLy);
- 
         JLabel lblMST = new JLabel("Mã số thuế:");
         lblMST.setBounds(460, 160, 150, 25);
         add(lblMST);
