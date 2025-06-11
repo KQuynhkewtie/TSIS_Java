@@ -65,6 +65,7 @@ public class Them_PNH extends BasePanel {
         initDetailTable();
 
         initActionButtons();
+
     }
 
     private void initInfoForm() {
@@ -82,8 +83,8 @@ public class Them_PNH extends BasePanel {
 
         txtMaNV = new JTextField();
         txtMaNV.setBounds(460, 110, 300, 30);
-        txtMaNV.setText(currentuser.getMaNhanVien().trim()); 
-        txtMaNV.setEditable(false); 
+        txtMaNV.setText(currentuser.getMaNhanVien().trim());
+        txtMaNV.setEditable(false);
         add(txtMaNV);
 
         JLabel lblMNCU = new JLabel("Nhà cung ứng:");
@@ -96,6 +97,8 @@ public class Them_PNH extends BasePanel {
 
         JButton btnChonNCU = new JButton("Chọn");
         btnChonNCU.setBounds(280, 190, 80, 30);
+        btnChonNCU.setBackground(Color.decode("#F0483E"));
+        btnChonNCU.setForeground(Color.WHITE);
         btnChonNCU.addActionListener(e -> hienThiDanhSachNhaCungUng());
         add(btnChonNCU);
 
@@ -185,15 +188,15 @@ public class Them_PNH extends BasePanel {
         scrollPane.setBounds(20, 270, 800, 200);
         add(scrollPane);
 
-        JButton btnThemDong = new JButton("Thêm dòng");
-        btnThemDong.setBounds(600, 500, 100, 30);
+        JButton btnThemDong = new JButton("Thêm sản phẩm");
+        btnThemDong.setBounds(600, 500, 130, 30);
         btnThemDong.setBackground(Color.decode("#F5A623"));
         btnThemDong.setForeground(Color.WHITE);
         btnThemDong.addActionListener(e -> hienThiDanhSachSanPham());
         add(btnThemDong);
 
-        JButton btnXoaDong = new JButton("Xóa dòng");
-        btnXoaDong.setBounds(600, 540, 100, 30);
+        JButton btnXoaDong = new JButton("Xóa sản phẩm");
+        btnXoaDong.setBounds(600, 540, 130, 30);
         btnXoaDong.setBackground(Color.decode("#D0021B"));
         btnXoaDong.setForeground(Color.WHITE);
         btnXoaDong.addActionListener(e -> {
@@ -211,7 +214,7 @@ public class Them_PNH extends BasePanel {
 
     private void initActionButtons() {
         JButton btnLuu = new JButton("Lưu");
-        btnLuu.setBounds(600, 580, 100, 30);
+        btnLuu.setBounds(600, 580, 130, 30);
         btnLuu.setBackground(Color.decode("#F0483E"));
         btnLuu.setForeground(Color.WHITE);
         btnLuu.addActionListener(e -> {
@@ -364,6 +367,7 @@ public class Them_PNH extends BasePanel {
             if (selectedRow >= 0) {
                 String maSP = model.getValueAt(selectedRow, 0).toString();
                 String tenSP = model.getValueAt(selectedRow, 1).toString();
+
                 for (int i = 0; i < tableModel.getRowCount(); i++) {
                     if (tableModel.getValueAt(i, 0).equals(maSP)) {
                         JOptionPane.showMessageDialog(dialog, "Sản phẩm này đã được thêm vào phiếu!",
@@ -371,6 +375,7 @@ public class Them_PNH extends BasePanel {
                         return;
                     }
                 }
+
                 tableModel.addRow(new Object[]{maSP, tenSP, "1", "", "", ""});
                 dialog.dispose();
 
@@ -382,20 +387,20 @@ public class Them_PNH extends BasePanel {
                 mainTable.getEditorComponent().requestFocusInWindow();
             }
         });
-      
+
         btnHuy.addActionListener(e -> dialog.dispose());
 
         dialog.setVisible(true);
     }
 
     private void loadSanPhamData(DefaultTableModel model, String keyword) {
-        model.setRowCount(0); 
+        model.setRowCount(0);
 
         List<SanPhamDTO> spList;
         if (keyword.isEmpty() || keyword.equals("Tìm kiếm sản phẩm")) {
-            spList = spDAL.getAllSanPham(); 
+            spList = spDAL.getAllSanPham();
         } else {
-            spList = spDAL.getSanPham(keyword); 
+            spList = spDAL.getSanPham(keyword);
         }
 
         for (SanPhamDTO sp : spList) {
