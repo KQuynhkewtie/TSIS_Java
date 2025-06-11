@@ -14,41 +14,35 @@ public class ThongKeHSDBLL {
     }
 
     public List<ThongKeHSDDTO> thongKeSanPhamTheoHSD(String tenSP, String filterHSD) {
-        // Lấy dữ liệu nhập hàng và số lượng đã bán
         List<ThongKeHSDDTO> nhapHang = thongKeHSDDAL.layDanhSachNhapHang();
         Map<String, Integer> soLuongDaBan = thongKeHSDDAL.laySoLuongDaBan();
 
-        // Nhóm theo mã sản phẩm
         Map<String, List<ThongKeHSDDTO>> nhomTheoMaSP = nhapHang.stream()
                 .collect(Collectors.groupingBy(ThongKeHSDDTO::getMaSP));
 
         List<ThongKeHSDDTO> ketQua = new ArrayList<>();
         LocalDate now = LocalDate.now();
 
-        // Tính toán số lượng tồn cho từng sản phẩm
         for (Map.Entry<String, List<ThongKeHSDDTO>> entry : nhomTheoMaSP.entrySet()) {
             String maSP = entry.getKey();
             List<ThongKeHSDDTO> cacLo = entry.getValue();
             int tongDaBan = soLuongDaBan.getOrDefault(maSP, 0);
             int conPhaiTru = tongDaBan;
 
-            // Duyệt qua các lô theo thứ tự hạn sử dụng tăng dần (HSD gần nhất trước)
             for (ThongKeHSDDTO lo : cacLo) {
                 if (conPhaiTru <= 0) {
-                    // Thêm lô vào kết quả với số lượng tồn = số lượng nhập
                     ketQua.add(new ThongKeHSDDTO(
                             lo.getMaSP(),
                             lo.getTenSP(),
                             lo.getSoLo(),
                             lo.getHanSuDung(),
-                            lo.getSoLuongCon(), // SLNHAP ban đầu
+                            lo.getSoLuongCon(),
                             lo.getNhaCungUng(),
                             lo.getNgayNhapKho()
                     ));
                 } else {
                     int tonKho = lo.getSoLuongCon() - conPhaiTru;
                     if (tonKho > 0) {
-                        // Thêm lô vào kết quả với số lượng tồn còn lại
                         ketQua.add(new ThongKeHSDDTO(
                                 lo.getMaSP(),
                                 lo.getTenSP(),
@@ -66,7 +60,6 @@ public class ThongKeHSDBLL {
             }
         }
 
-        // Lọc theo tên sản phẩm và hạn sử dụng
         return ketQua.stream()
                 .filter(sp -> tenSP == null || tenSP.isEmpty() ||
                         sp.getTenSP().toLowerCase().contains(tenSP.toLowerCase()))
@@ -74,6 +67,8 @@ public class ThongKeHSDBLL {
                     switch (filterHSD) {
                         case "Đã hết hạn":
                             return sp.getHanSuDung().isBefore(now);
+                        case "Còn hạn":
+                            return !sp.getHanSuDung().isBefore(now);
                         case "7 ngày tới":
                             return !sp.getHanSuDung().isBefore(now) &&
                                     !sp.getHanSuDung().isAfter(now.plusDays(7));
