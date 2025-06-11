@@ -1,9 +1,11 @@
 package helper;
 
+import DTO.NhanVienDTO;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import DTO.HoaDonDTO;
 import DTO.ChiTietHoaDonDTO;
+import DTO.KhachHangDTO;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -18,7 +20,9 @@ public class PDFGeneratorHD {
     public void exportHoaDonToPDF(JFrame parentFrame,
                                   HoaDonDTO hd,
                                   List<ChiTietHoaDonDTO> chiTiet,
-                                  Map<String, String> tenSanPhamMap) {
+                                  Map<String, String> tenSanPhamMap,
+                                  NhanVienDTO nhanVien,
+                                  KhachHangDTO khachHang) {
         if (hd == null || chiTiet == null) {
             JOptionPane.showMessageDialog(parentFrame,
                     "Dữ liệu hóa đơn không hợp lệ!",
@@ -46,7 +50,7 @@ public class PDFGeneratorHD {
             }
 
             try {
-                generatePDFFromData(filePath, hd, chiTiet, tenSanPhamMap);
+                generatePDFFromData(filePath, hd, chiTiet, tenSanPhamMap, nhanVien, khachHang);
                 JOptionPane.showMessageDialog(parentFrame,
                         "Xuất PDF thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
@@ -60,12 +64,13 @@ public class PDFGeneratorHD {
     private void generatePDFFromData(String filePath,
                                      HoaDonDTO hd,
                                      List<ChiTietHoaDonDTO> chiTiet,
-                                     Map<String, String> tenSanPhamMap) throws Exception {
+                                     Map<String, String> tenSanPhamMap,
+                                     NhanVienDTO nhanVien,
+                                     KhachHangDTO khachHang) throws Exception {
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(filePath));
         document.open();
 
-        // Font Unicode
         BaseFont bf = BaseFont.createFont(
                 "c:/windows/fonts/times.ttf",
                 BaseFont.IDENTITY_H,
@@ -74,33 +79,82 @@ public class PDFGeneratorHD {
 
         Font fontTitle = new Font(bf, 18, Font.BOLD);
         Font fontHeader = new Font(bf, 14, Font.BOLD);
-        Font fontNormal = new Font(bf, 13, Font.NORMAL);
+        Font fontNormal = new Font(bf, 12, Font.NORMAL);
         Font fontBold = new Font(bf, 12, Font.BOLD);
+        Font fontSmall = new Font(bf, 10, Font.NORMAL);
 
-        // Tiêu đề
-        Paragraph title = new Paragraph("HÓA ĐƠN BÁN HÀNG", fontTitle);
-        title.setAlignment(Element.ALIGN_CENTER);
-        title.setSpacingAfter(20f);
-        document.add(title);
+        Paragraph pharmacyHeader = new Paragraph("TSIS PHARMACY", fontTitle);
+        pharmacyHeader.setAlignment(Element.ALIGN_LEFT);
+        pharmacyHeader.setSpacingAfter(0f);
+        document.add(pharmacyHeader);
 
-        // Thông tin hóa đơn (không dùng table)
-        Paragraph maHoaDon = new Paragraph("Mã hóa đơn: " + hd.getMaHoaDon(), fontNormal);
-        maHoaDon.setSpacingAfter(5f);
-        document.add(maHoaDon);
+        Paragraph taxCode = new Paragraph("Mã số thuế: 0312345678", fontNormal);
+        taxCode.setAlignment(Element.ALIGN_LEFT);
+        taxCode.setSpacingAfter(0f);
+        document.add(taxCode);
 
-        Paragraph ngayBan = new Paragraph("Ngày bán: " + new SimpleDateFormat("dd/MM/yyyy").format(hd.getNgayBan()), fontNormal);
-        ngayBan.setSpacingAfter(5f);
-        document.add(ngayBan);
+        Paragraph address = new Paragraph("Địa chỉ: 123 Đường ABC, Phường XYZ, Quận 1, TP.HCM", fontNormal);
+        address.setAlignment(Element.ALIGN_LEFT);
+        address.setSpacingAfter(0f);
+        document.add(address);
 
-        Paragraph nhanVien = new Paragraph("Nhân viên thanh toán: " + hd.getMaNhanVien(), fontNormal);
-        nhanVien.setSpacingAfter(5f);
-        document.add(nhanVien);
+        Paragraph phone = new Paragraph("SĐT: 0987654321", fontNormal);
+        phone.setAlignment(Element.ALIGN_LEFT);
+        phone.setSpacingAfter(20f);
+        document.add(phone);
 
-        Paragraph khachHang = new Paragraph("Khách hàng: " + (hd.getMaKH() != null ? hd.getMaKH() : ""), fontNormal);
-        khachHang.setSpacingAfter(20f);
-        document.add(khachHang);
+        Paragraph invoiceTitle = new Paragraph("HÓA ĐƠN THANH TOÁN", fontTitle);
+        invoiceTitle.setAlignment(Element.ALIGN_CENTER);
+        invoiceTitle.setSpacingAfter(0f);
+        document.add(invoiceTitle);
 
-        // Danh sách sản phẩm
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String currentDate = dateFormat.format(hd.getNgayBan());
+        String[] dateParts = currentDate.split("/");
+
+        String signatureCode = "2K" + dateParts[2].substring(2) + "TYY";
+
+        Paragraph dateLine = new Paragraph("Ngày " + dateParts[0] + " tháng " + dateParts[1] + " năm " + dateParts[2], fontNormal);
+        dateLine.setAlignment(Element.ALIGN_CENTER);
+        dateLine.setSpacingAfter(0f);
+        document.add(dateLine);
+
+        Paragraph signatureCodeLine = new Paragraph("Ký hiệu: " + signatureCode, fontNormal);
+        signatureCodeLine.setAlignment(Element.ALIGN_RIGHT);
+        signatureCodeLine.setSpacingAfter(0f);
+        document.add(signatureCodeLine);
+
+        Paragraph invoiceCode = new Paragraph("Mã phiếu: " + hd.getMaHoaDon(), fontNormal);
+        invoiceCode.setAlignment(Element.ALIGN_RIGHT);
+        invoiceCode.setSpacingAfter(5f);
+        document.add(invoiceCode);
+
+        String nhanVienInfo = hd.getMaNhanVien().trim() + "_" + nhanVien.getHoTen();
+        Paragraph staffLine = new Paragraph("Nhân viên thanh toán: " + nhanVienInfo, fontNormal);
+        staffLine.setAlignment(Element.ALIGN_LEFT);
+        staffLine.setSpacingAfter(2.5f);
+        document.add(staffLine);
+
+        Paragraph customerTitle = new Paragraph("Thông tin khách hàng:", fontBold);
+        customerTitle.setSpacingAfter(2.5f);
+        document.add(customerTitle);
+
+        String customerName = khachHang != null ? khachHang.getHoTen() : "";
+        String customerCCCD = (khachHang != null && khachHang.getCCCD() != null) ? khachHang.getCCCD() : "";
+        String customerPhone = khachHang != null ? khachHang.getSdt() : "";
+
+        Paragraph customerNameLine = new Paragraph("Tên: " + customerName, fontNormal);
+        customerNameLine.setSpacingAfter(2.5f);
+        document.add(customerNameLine);
+
+        Paragraph customerCCCDLine = new Paragraph("CCCD: " + customerCCCD, fontNormal);
+        customerCCCDLine.setSpacingAfter(2.5f);
+        document.add(customerCCCDLine);
+
+        Paragraph customerPhoneLine = new Paragraph("Số điện thoại: " + customerPhone, fontNormal);
+        customerPhoneLine.setSpacingAfter(10f);
+        document.add(customerPhoneLine);
+
         Paragraph productTitle = new Paragraph("DANH SÁCH SẢN PHẨM", fontHeader);
         productTitle.setAlignment(Element.ALIGN_CENTER);
         productTitle.setSpacingAfter(10f);
@@ -108,16 +162,14 @@ public class PDFGeneratorHD {
 
         PdfPTable productTable = new PdfPTable(5);
         productTable.setWidthPercentage(100);
-        productTable.setSpacingAfter(20f);
+        productTable.setSpacingAfter(10f);
 
-        // Header
         addCell(productTable, "Mã SP", fontBold);
         addCell(productTable, "Tên sản phẩm", fontBold);
         addCell(productTable, "Số lượng", fontBold);
         addCell(productTable, "Đơn giá", fontBold);
         addCell(productTable, "Thành tiền", fontBold);
 
-        // Dữ liệu
         for (ChiTietHoaDonDTO ct : chiTiet) {
             String tenSP = tenSanPhamMap.getOrDefault(ct.getMaSanPham().trim(), "Không xác định");
             double thanhTien = ct.getSoLuong() * ct.getGia();
@@ -135,31 +187,27 @@ public class PDFGeneratorHD {
                 .mapToDouble(ct -> ct.getSoLuong() * ct.getGia())
                 .sum();
 
-        // Thông tin thanh toán (không dùng table)
-        Paragraph TongCong = new Paragraph("Tổng cộng: " + formatCurrency(tongCong), fontBold);
-        TongCong.setSpacingAfter(5f);
-        document.add(TongCong);
+        Paragraph totalLine = new Paragraph("Tổng cộng: " + formatCurrency(tongCong), fontBold);
+        totalLine.setSpacingAfter(2.5f);
+        document.add(totalLine);
 
-        Paragraph giamGia = new Paragraph("Giảm giá:.........................................................................................................................", fontNormal);
-        giamGia.setSpacingAfter(5f);
-        document.add(giamGia);
+        Paragraph discountLine = new Paragraph("Giảm giá:.........................................................................................................................", fontNormal);
+        discountLine.setSpacingAfter(2.5f);
+        document.add(discountLine);
 
-        Paragraph khachThanhToan = new Paragraph("Khách thanh toán:............................................................................................................", fontNormal);
-        khachThanhToan.setSpacingAfter(20f);
-        document.add(khachThanhToan);
+        Paragraph paymentAmountLine = new Paragraph("Khách thanh toán:............................................................................................................", fontNormal);
+        paymentAmountLine.setSpacingAfter(10f);
+        document.add(paymentAmountLine);
 
-        // Hình thức thanh toán
         Paragraph paymentMethod = new Paragraph("Hình thức thanh toán: □ Tiền mặt □ Chuyển khoản □ Momo/QR", fontNormal);
         paymentMethod.setAlignment(Element.ALIGN_LEFT);
-        paymentMethod.setSpacingBefore(10f);
+        paymentMethod.setSpacingBefore(5f);
         document.add(paymentMethod);
 
-        // Ghi chú
         Paragraph notes = new Paragraph("Ghi chú (nếu có):\n...............................................................................................................................................................", fontNormal);
-        notes.setSpacingBefore(10f);
+        notes.setSpacingBefore(5f);
         document.add(notes);
 
-        // Ký tên
         Paragraph signature = new Paragraph("\n\n\n\nNgười lập\n(Ký và ghi rõ họ tên)", fontNormal);
         signature.setAlignment(Element.ALIGN_RIGHT);
         document.add(signature);
