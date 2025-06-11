@@ -1,9 +1,11 @@
 package GUI;
 
 import javax.swing.*;
+
 import BLL.HangSanXuatBLL;
 import DTO.HangSanXuatDTO;
 import DTO.currentuser;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,10 +14,9 @@ import java.awt.event.MouseEvent;
 
 public class CapNhatTT_HSX extends BasePanel {
     private HangSanXuatBLL bllhsx = new HangSanXuatBLL();
-    private JTextField txtTenHSX, txtMaHSX, txtMST, txtSDT, txtDC;
+    private JTextField  txtTenHSX, txtMaHSX, txtMST, txtSDT, txtDC;
     private JRadioButton rbSD, rbNSD;
     private ButtonGroup groupTrangThai;
-
     public CapNhatTT_HSX(MainFrame mainFrame) {
         super(mainFrame);
         initUniqueComponents();
@@ -49,15 +50,16 @@ public class CapNhatTT_HSX extends BasePanel {
             }
         });
 
+
+
         lblTTHSXLink.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                String maHSX = txtMaHSX.getText().trim();
+                String maHSX =  txtMaHSX.getText().trim();
                 HangSanXuatDTO hsx = bllhsx.getHSXbyID(maHSX);
                 if (hsx != null) {
                     TTCT_HSX cthsx = mainFrame.getPage("ttcthsx", TTCT_HSX.class);
-                    cthsx.setThongTin(hsx.getMaHSX(), hsx.getTenHSX(), hsx.getMaSoThue(), hsx.getSdt(), hsx.getDiaChi(),
-                            hsx.getTrangThai());
+                    cthsx.setThongTin(hsx.getMaHSX(), hsx.getTenHSX(), hsx.getMaSoThue(), hsx.getSdt(), hsx.getDiaChi(), hsx.getTrangThai());
                     mainFrame.showPage("ttcthsx");
                 } else {
                     JOptionPane.showMessageDialog(null, "Không tìm thấy hãng sản xuất!");
@@ -131,23 +133,21 @@ public class CapNhatTT_HSX extends BasePanel {
             public void actionPerformed(ActionEvent e) {
                 if (!currentuser.coQuyen("Sửa hãng sản xuất")) {
 
-                    JOptionPane.showMessageDialog(null, "Bạn không có quyền cập nhật!", "Cảnh báo",
-                            JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Bạn không có quyền cập nhật!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
+                // Lấy dữ liệu từ các trường nhập
                 String maHSX = txtMaHSX.getText().trim();
                 String tenHSX = txtTenHSX.getText().trim();
                 String MST = txtMST.getText().trim();
                 String SDT = txtSDT.getText().trim();
                 String DC = txtDC.getText().trim();
                 if (maHSX.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập mã hãng sản xuất!", "Lỗi",
-                            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập mã hãng sản xuất!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (tenHSX.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập tên hãng sản xuất!", "Lỗi",
-                            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập tên hãng sản xuất!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (MST.isEmpty()) {
@@ -159,8 +159,7 @@ public class CapNhatTT_HSX extends BasePanel {
                     return;
                 }
                 if (SDT.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập số điện thoại!", "Lỗi",
-                            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập số điện thoại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 String trangthai = null;
@@ -173,6 +172,7 @@ public class CapNhatTT_HSX extends BasePanel {
                     return;
                 }
                 try {
+
                     HangSanXuatDTO hsx = new HangSanXuatDTO();
                     hsx.setMaHSX(maHSX);
                     hsx.setTenHSX(tenHSX);
@@ -187,8 +187,7 @@ public class CapNhatTT_HSX extends BasePanel {
                     if (success) {
                         JOptionPane.showMessageDialog(null, "Cập nhật hãng sản xuất thành công!");
                         TTCT_HSX cthsx = mainFrame.getPage("ttcthsx", TTCT_HSX.class);
-                        cthsx.setThongTin(hsx.getMaHSX(), hsx.getTenHSX(), hsx.getMaSoThue(), hsx.getSdt(),
-                                hsx.getDiaChi(), hsx.getTrangThai());
+                        cthsx.setThongTin(hsx.getMaHSX(), hsx.getTenHSX(), hsx.getMaSoThue(), hsx.getSdt(), hsx.getDiaChi(), hsx.getTrangThai());
                         mainFrame.showPage("ttcthsx");
                     } else {
                         JOptionPane.showMessageDialog(null, "Cập nhật thất bại!");
@@ -200,7 +199,9 @@ public class CapNhatTT_HSX extends BasePanel {
             }
         });
         setDefaultButtonSafe(btnLuusua);
+
     }
+
 
     public void loadhsxInfoForUpdate(String maHSX) {
         HangSanXuatDTO hsx = bllhsx.getHSXbyID(maHSX);

@@ -1,30 +1,28 @@
 package GUI;
 
 import javax.swing.*;
+
 import BLL.KhachHangBLL;
 import DTO.KhachHangDTO;
 import DTO.currentuser;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 public class CapNhatTT_KH extends BasePanel {
     private KhachHangBLL bllKhachhang = new KhachHangBLL();
-    private JTextField txtHoTen, txtMaKH, txtDiemTL, txtsdt, txtLoaiKH;
-
+    private JTextField  txtHoTen, txtMaKH, txtDiemTL, txtsdt, txtLoaiKH, txtcccd;
     public CapNhatTT_KH(MainFrame mainFrame) {
         super(mainFrame);
         initUniqueComponents();
     }
-
     @Override
     public void onPageShown() {
         highlightMenuButton("Khách hàng");
     }
 
     protected void initUniqueComponents() {
+
 
         JLabel lblKhachhangLink = new JLabel("<html><u>Khách Hàng</u></html>");
         lblKhachhangLink.setFont(new Font("Arial", Font.BOLD, 20));
@@ -50,6 +48,8 @@ public class CapNhatTT_KH extends BasePanel {
             }
         });
 
+
+
         lblTTKhachhangLink.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -58,9 +58,8 @@ public class CapNhatTT_KH extends BasePanel {
                 KhachHangDTO kh = bllKhachhang.getKhachHangById(maKH);
                 if (kh != null) {
                     TTCT_KH ttctPage = mainFrame.getPage("ttctkh", TTCT_KH.class);
-                    ttctPage.setThongTin(maKH, txtHoTen.getText(),
-                            Double.parseDouble(txtDiemTL.getText()),
-                            txtLoaiKH.getText(), txtsdt.getText());
+                    ttctPage.setThongTin(kh.getHoTen(), kh.getMaKH(),  kh.getDiemTichLuy(),
+                            kh.getLoaiKhach(), kh.getSdt(), kh.getCCCD());
                     mainFrame.showPage("ttctkh");
                 } else {
                     JOptionPane.showMessageDialog(null, "Không tìm thấy khách hàng!");
@@ -92,21 +91,28 @@ public class CapNhatTT_KH extends BasePanel {
         txtsdt.setBounds(200, 180, 200, 30);
         add(txtsdt);
 
+        JLabel lblCCCD = new JLabel("CCCD:");
+        lblCCCD.setBounds(20, 230, 150, 30);
+        add(lblCCCD);
+        txtcccd = new JTextField();
+        txtcccd.setBounds(200, 230, 200, 30);
+        add(txtcccd);
+
         JLabel lblDiemTL = new JLabel("Điểm tích lũy:");
-        lblDiemTL.setBounds(20, 230, 150, 30);
+        lblDiemTL.setBounds(20, 280, 150, 30);
         add(lblDiemTL);
         txtDiemTL = new JTextField();
-        txtDiemTL.setBounds(200, 230, 200, 30);
+        txtDiemTL.setBounds(200, 280, 200, 30);
         add(txtDiemTL);
         txtDiemTL.setEditable(false);
         txtDiemTL.setFocusable(false);
         txtDiemTL.setBackground(new Color(230, 230, 230));
 
         JLabel lblLoaiKH = new JLabel("Mã loại khách hàng:");
-        lblLoaiKH.setBounds(20, 280, 150, 30);
+        lblLoaiKH.setBounds(20, 330, 150, 30);
         add(lblLoaiKH);
         txtLoaiKH = new JTextField();
-        txtLoaiKH.setBounds(200, 280, 200, 30);
+        txtLoaiKH.setBounds(200, 330, 200, 30);
         add(txtLoaiKH);
         txtLoaiKH.setEditable(false);
         txtLoaiKH.setFocusable(false);
@@ -122,8 +128,7 @@ public class CapNhatTT_KH extends BasePanel {
             public void actionPerformed(ActionEvent e) {
                 if (!currentuser.coQuyen("Sửa khách hàng")) {
 
-                    JOptionPane.showMessageDialog(null, "Bạn không có quyền cập nhật!", "Cảnh báo",
-                            JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Bạn không có quyền cập nhật!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 String maKH = txtMaKH.getText().trim();
@@ -131,21 +136,19 @@ public class CapNhatTT_KH extends BasePanel {
                 String DTLstr = txtDiemTL.getText().trim();
                 String maloaikh = txtLoaiKH.getText().trim();
                 String sdt = txtsdt.getText().trim();
+                String cccd = txtcccd.getText().trim();
 
                 if (maKH.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập mã khách hàng!", "Lỗi",
-                            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập mã khách hàng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (tenKH.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập tên khách hàng!", "Lỗi",
-                            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập tên khách hàng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
                 if (sdt.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập số điện thoại!", "Lỗi",
-                            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập số điện thoại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 try {
@@ -157,6 +160,9 @@ public class CapNhatTT_KH extends BasePanel {
                     kh.setDiemTichLuy(DTL);
                     kh.setLoaiKhach(maloaikh);
                     kh.setSdt(sdt);
+                    kh.setCCCD(cccd);
+
+                    System.out.println("MAKH cần cập nhật: " + maKH);
 
                     boolean success = bllKhachhang.updateKhachHang(kh);
 
@@ -164,8 +170,8 @@ public class CapNhatTT_KH extends BasePanel {
                         JOptionPane.showMessageDialog(null, "Cập nhật khách hàng thành công!");
 
                         TTCT_KH ttctPage = mainFrame.getPage("ttctkh", TTCT_KH.class);
-                        ttctPage.setThongTin(kh.getMaKH(), kh.getHoTen(),
-                                kh.getDiemTichLuy(), kh.getLoaiKhach(), kh.getSdt());
+                        ttctPage.setThongTin( kh.getMaKH(),kh.getHoTen(), kh.getDiemTichLuy(),
+                                kh.getLoaiKhach(), kh.getSdt(), kh.getCCCD());
                         mainFrame.showPage("ttctkh");
                     } else {
                         JOptionPane.showMessageDialog(null, "Cập nhật thất bại!");
@@ -176,9 +182,16 @@ public class CapNhatTT_KH extends BasePanel {
                 }
             }
         });
-        setDefaultButtonSafe(btnLuusua);
-    }
+        getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "saveAction");
 
+        getActionMap().put("saveAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnLuusua.doClick();
+            }
+        });
+    }
     public void loadCustomerInfoForUpdate(String maKH) {
         KhachHangDTO kh = bllKhachhang.getKhachHangById(maKH);
 
@@ -188,6 +201,7 @@ public class CapNhatTT_KH extends BasePanel {
             txtDiemTL.setText(String.valueOf(kh.getDiemTichLuy()));
             txtLoaiKH.setText(String.valueOf(kh.getLoaiKhach()));
             txtsdt.setText(kh.getSdt());
+            txtcccd.setText(kh.getCCCD());
 
         } else {
             JOptionPane.showMessageDialog(this, "Không tìm thấy khách hàng!");

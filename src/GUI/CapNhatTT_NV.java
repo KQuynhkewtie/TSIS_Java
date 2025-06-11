@@ -1,9 +1,12 @@
 package GUI;
 
 import javax.swing.*;
+
 import BLL.NhanVienBLL;
 import DTO.NhanVienDTO;
 import DTO.currentuser;
+
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,9 +15,9 @@ import java.awt.event.MouseEvent;
 
 public class CapNhatTT_NV extends BasePanel {
     private NhanVienBLL bllnv = new NhanVienBLL();
-    private JTextField txtTenNV, txtMaNV, txtCCCD, txtSDT, txtMST;
-    private JRadioButton rbBanHang, rbQuanLy, rbDangLam, rbĐanghi;
-    private ButtonGroup groupVTCV, groupTrangThai;
+    private JTextField   txtTenNV, txtMaNV, txtCCCD, txtSDT,  txtMST;
+    private JRadioButton rbBanHang, rbQuanLy,rbDangLam, rbĐanghi;
+    private ButtonGroup groupVTCV,groupTrangThai;
 
     public CapNhatTT_NV(MainFrame mainFrame) {
         super(mainFrame);
@@ -25,7 +28,6 @@ public class CapNhatTT_NV extends BasePanel {
     public void onPageShown() {
         highlightMenuButton("Nhân viên");
     }
-
     protected void initUniqueComponents() {
 
         JLabel lblnvLink = new JLabel("<html><u>Nhân viên</u></html>");
@@ -53,10 +55,11 @@ public class CapNhatTT_NV extends BasePanel {
             }
         });
 
+
         lblTTnvLink.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                String maNV = txtMaNV.getText().trim();
+                String maNV =  txtMaNV.getText().trim();
                 NhanVienDTO nv = bllnv.getNhanVienByID(maNV);
                 if (nv != null) {
                     TTCT_NV ttctPage = mainFrame.getPage("ttctnv", TTCT_NV.class);
@@ -100,6 +103,7 @@ public class CapNhatTT_NV extends BasePanel {
         txtCCCD.setBounds(20, 350, 300, 30);
         add(txtCCCD);
 
+
         JLabel lblVTCV = new JLabel("Vị trí công việc:");
         lblVTCV.setBounds(460, 80, 150, 25);
         add(lblVTCV);
@@ -112,6 +116,7 @@ public class CapNhatTT_NV extends BasePanel {
         rbQuanLy.setBounds(460, 140, 200, 25);
         add(rbQuanLy);
 
+
         groupVTCV = new ButtonGroup();
         groupVTCV.add(rbBanHang);
         groupVTCV.add(rbQuanLy);
@@ -122,6 +127,7 @@ public class CapNhatTT_NV extends BasePanel {
         txtMST = new JTextField();
         txtMST.setBounds(460, 190, 300, 30);
         add(txtMST);
+
 
         JLabel lblTrangThai = new JLabel("Trạng thái:");
         lblTrangThai.setBounds(460, 240, 150, 25);
@@ -151,8 +157,7 @@ public class CapNhatTT_NV extends BasePanel {
             public void actionPerformed(ActionEvent e) {
                 if (!currentuser.coQuyen("Sửa nhân viên")) {
 
-                    JOptionPane.showMessageDialog(null, "Bạn không có quyền cập nhật!", "Cảnh báo",
-                            JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Bạn không có quyền cập nhật!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 
@@ -165,24 +170,21 @@ public class CapNhatTT_NV extends BasePanel {
 
                 System.out.println("MaVT cần cập nhật: " + maVT);
 
+
                 if (maNV.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập mã nhân viên!", "Lỗi",
-                            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập mã nhân viên!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (tenNV.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập tên nhân viên!", "Lỗi",
-                            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập tên nhân viên!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (CCCD.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập căn cước công dân!", "Lỗi",
-                            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập căn cước công dân!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (SDT.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập số điện thoại!", "Lỗi",
-                            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập số điện thoại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (MST.isEmpty()) {
@@ -194,8 +196,7 @@ public class CapNhatTT_NV extends BasePanel {
                 } else if (rbQuanLy.isSelected()) {
                     maVT = "VT002";
                 } else {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn vị trí công việc!", "Lỗi",
-                            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng chọn vị trí công việc!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
@@ -240,7 +241,6 @@ public class CapNhatTT_NV extends BasePanel {
         });
         setDefaultButtonSafe(btnLuusua);
     }
-
     public void loadnvInfoForUpdate(String maNV) {
         NhanVienDTO nv = bllnv.getNhanVienByID(maNV);
 

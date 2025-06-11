@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import com.toedter.calendar.JDateChooser;
 import BLL.HoaDonBLL;
 import DTO.HoaDonDTO;
@@ -99,9 +100,9 @@ public class CapNhatTT_HD extends BasePanel {
         add(lblMaHD);
         txtMaHD = new JTextField();
         txtMaHD.setBounds(20, 110, 300, 30);
-        txtMaHD.setBackground(new Color(230, 230, 230)); // Màu nền xám
-        txtMaHD.setEditable(false); // Không cho chỉnh sửa
-        txtMaHD.setFocusable(false); // Không cho focus
+        txtMaHD.setBackground(new Color(230, 230, 230));
+        txtMaHD.setEditable(false);
+        txtMaHD.setFocusable(false);
         add(txtMaHD);
 
         JLabel lblMNV = new JLabel("Nhân viên:");
@@ -149,11 +150,10 @@ public class CapNhatTT_HD extends BasePanel {
         lblChiTiet.setBounds(20, 230, 200, 30);
         add(lblChiTiet);
 
-        String[] columns = { "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá" };
+        String[] columns = {"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá"};
         tableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                // Chỉ cho phép chỉnh sửa cột số lượng
                 return column == 2;
             }
         };
@@ -165,8 +165,7 @@ public class CapNhatTT_HD extends BasePanel {
 
         table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                    boolean hasFocus, int row, int column) {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 c.setBackground(new Color(240, 240, 240));
                 return c;
@@ -175,8 +174,7 @@ public class CapNhatTT_HD extends BasePanel {
 
         table.getColumnModel().getColumn(1).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                    boolean hasFocus, int row, int column) {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 c.setBackground(new Color(240, 240, 240));
                 return c;
@@ -185,8 +183,7 @@ public class CapNhatTT_HD extends BasePanel {
 
         table.getColumnModel().getColumn(3).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                    boolean hasFocus, int row, int column) {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 c.setBackground(new Color(240, 240, 240));
                 return c;
@@ -194,7 +191,7 @@ public class CapNhatTT_HD extends BasePanel {
         });
 
         tableModel.addTableModelListener(e -> {
-            if (e.getColumn() == 2) { // cột số lượng
+            if (e.getColumn() == 2) {
                 calculateThanhTien();
             }
         });
@@ -203,15 +200,16 @@ public class CapNhatTT_HD extends BasePanel {
         scrollPane.setBounds(20, 270, 800, 200);
         add(scrollPane);
 
-        JButton btnThemDong = new JButton("Thêm dòng");
-        btnThemDong.setBounds(600, 500, 100, 30);
+        // Nút thêm/xóa dòng
+        JButton btnThemDong = new JButton("Thêm sản phẩm");
+        btnThemDong.setBounds(600, 500, 130, 30);
         btnThemDong.setBackground(Color.decode("#F5A623"));
         btnThemDong.setForeground(Color.WHITE);
         btnThemDong.addActionListener(e -> hienThiDanhSachSanPham());
         add(btnThemDong);
 
-        JButton btnXoaDong = new JButton("Xóa dòng");
-        btnXoaDong.setBounds(600, 540, 100, 30);
+        JButton btnXoaDong = new JButton("Xóa sản phẩm");
+        btnXoaDong.setBounds(600, 540, 130, 30);
         btnXoaDong.setForeground(Color.WHITE);
         btnXoaDong.setBackground(Color.decode("#D0021B"));
         btnXoaDong.addActionListener(e -> {
@@ -224,6 +222,7 @@ public class CapNhatTT_HD extends BasePanel {
             }
         });
         add(btnXoaDong);
+
         setupKeyboardNavigation();
     }
 
@@ -255,7 +254,7 @@ public class CapNhatTT_HD extends BasePanel {
 
     private void initActionButtons() {
         JButton btnLuu = new JButton("Lưu");
-        btnLuu.setBounds(600, 580, 100, 30);
+        btnLuu.setBounds(600, 580, 130, 30);
         btnLuu.setBackground(Color.decode("#F0483E"));
         btnLuu.setForeground(Color.WHITE);
         btnLuu.addActionListener(e -> luuHoaDon());
@@ -265,7 +264,7 @@ public class CapNhatTT_HD extends BasePanel {
     }
 
     private void setupKeyboardNavigation() {
-        JTextField[] textFields = { txtMaNV, txtMaKH };
+        JTextField[] textFields = {txtMaNV, txtMaKH};
 
         for (int i = 0; i < textFields.length; i++) {
             final int currentIndex = i;
@@ -312,7 +311,7 @@ public class CapNhatTT_HD extends BasePanel {
                 if (key == KeyEvent.VK_UP && row == 0) {
                     txtMaKH.requestFocus();
                 } else if (key == KeyEvent.VK_DOWN && row == table.getRowCount() - 1) {
-                    tableModel.addRow(new Object[] { "", "", "1", "" });
+                    tableModel.addRow(new Object[]{"", "", "1", ""});
                     table.setRowSelectionInterval(row + 1, row + 1);
                     table.setColumnSelectionInterval(0, 0);
                 } else if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_TAB) {
@@ -322,7 +321,7 @@ public class CapNhatTT_HD extends BasePanel {
                         table.setRowSelectionInterval(row + 1, row + 1);
                         table.setColumnSelectionInterval(0, 0);
                     } else {
-                        tableModel.addRow(new Object[] { "", "", "1", "" });
+                        tableModel.addRow(new Object[]{"", "", "1", ""});
                         table.setRowSelectionInterval(row + 1, row + 1);
                         table.setColumnSelectionInterval(0, 0);
                     }
@@ -332,8 +331,7 @@ public class CapNhatTT_HD extends BasePanel {
     }
 
     private void hienThiDanhSachSanPham() {
-        JDialog dialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Chọn Sản Phẩm", true);
-        dialog.setSize(700, 500);
+        JDialog dialog = new JDialog((JFrame)SwingUtilities.getWindowAncestor(this), "Chọn Sản Phẩm", true);        dialog.setSize(700, 500);
         dialog.setLocationRelativeTo(this);
         dialog.setLayout(new BorderLayout());
 
@@ -343,7 +341,7 @@ public class CapNhatTT_HD extends BasePanel {
         searchPanel.add(txtSearch, BorderLayout.CENTER);
         dialog.add(searchPanel, BorderLayout.NORTH);
 
-        String[] columnNames = { "Mã SP", "Tên SP", "Mã Loại SP", "Mã Hãng sản xuất", "Giá bán" };
+        String[] columnNames = {"Mã SP", "Tên SP", "Mã Loại SP", "Mã Hãng sản xuất", "Giá bán"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         JTable table = new JTable(model);
         table.setRowHeight(25);
@@ -397,7 +395,6 @@ public class CapNhatTT_HD extends BasePanel {
                 String tenSP = model.getValueAt(selectedRow, 1).toString();
                 String donGia = model.getValueAt(selectedRow, 4).toString();
 
-                // Kiểm tra xem sản phẩm
                 for (int i = 0; i < tableModel.getRowCount(); i++) {
                     if (tableModel.getValueAt(i, 0).equals(maSP)) {
                         JOptionPane.showMessageDialog(dialog, "Sản phẩm này đã được thêm vào hóa đơn!",
@@ -406,8 +403,7 @@ public class CapNhatTT_HD extends BasePanel {
                     }
                 }
 
-                // Thêm dòng mới với sản phẩm đã chọn
-                tableModel.addRow(new Object[] { maSP, tenSP, "1", donGia });
+                tableModel.addRow(new Object[]{maSP, tenSP, "1", donGia});
                 dialog.dispose();
 
                 int newRow = tableModel.getRowCount() - 1;
@@ -429,17 +425,17 @@ public class CapNhatTT_HD extends BasePanel {
     }
 
     private void loadSanPhamData(DefaultTableModel model, String keyword) {
-        model.setRowCount(0); // Xóa dữ liệu cũ
+        model.setRowCount(0);
 
         List<SanPhamDTO> spList;
         if (keyword.isEmpty() || keyword.equals("Tìm kiếm sản phẩm")) {
             spList = spDAL.getAllSanPham();
         } else {
-            spList = spDAL.getSanPham(keyword); // Tìm kiếm theo từ khóa
+            spList = spDAL.getSanPham(keyword);
         }
 
         for (SanPhamDTO sp : spList) {
-            model.addRow(new Object[] {
+            model.addRow(new Object[]{
                     sp.getMaSP(),
                     sp.getTenSP(),
                     sp.getMaLSP(),
@@ -450,16 +446,15 @@ public class CapNhatTT_HD extends BasePanel {
     }
 
     private void hienThiDanhSachNhanVien() {
-        JDialog dialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Chọn Nhân Viên", true);
-        dialog.setSize(400, 300);
+        JDialog dialog = new JDialog((JFrame)SwingUtilities.getWindowAncestor(this), "Chọn Nhân Viên", true);        dialog.setSize(400, 300);
         dialog.setLocationRelativeTo(this);
 
         List<NhanVienDTO> nvList = nvDAL.getAllNhanVien();
-        String[] columnNames = { "Mã NV", "Họ tên" };
+        String[] columnNames = {"Mã NV", "Họ tên"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
         for (NhanVienDTO nv : nvList) {
-            model.addRow(new Object[] { nv.getMaNhanVien(), nv.getHoTen() });
+            model.addRow(new Object[]{nv.getMaNhanVien(), nv.getHoTen()});
         }
 
         JTable table = new JTable(model);
@@ -479,16 +474,15 @@ public class CapNhatTT_HD extends BasePanel {
     }
 
     private void hienThiDanhSachKhachHang() {
-        JDialog dialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Chọn Khách Hàng", true);
-        dialog.setSize(400, 300);
+        JDialog dialog = new JDialog((JFrame)SwingUtilities.getWindowAncestor(this), "Chọn Khách Hàng", true);        dialog.setSize(400, 300);
         dialog.setLocationRelativeTo(this);
 
         List<KhachHangDTO> khList = khDAL.getAllKhachHang();
-        String[] columnNames = { "Mã KH", "Họ tên" };
+        String[] columnNames = {"Mã KH", "Họ tên"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
         for (KhachHangDTO kh : khList) {
-            model.addRow(new Object[] { kh.getMaKH(), kh.getHoTen() });
+            model.addRow(new Object[]{kh.getMaKH(), kh.getHoTen()});
         }
 
         JTable table = new JTable(model);
@@ -508,8 +502,7 @@ public class CapNhatTT_HD extends BasePanel {
     }
 
     private void loadData() {
-        if (maHD == null)
-            return;
+        if (maHD == null) return;
 
         HoaDonDTO hd = hdBLL.layHoaDonTheoMa(maHD);
         if (hd != null) {
@@ -528,7 +521,7 @@ public class CapNhatTT_HD extends BasePanel {
 
             for (ChiTietHoaDonDTO ct : danhSachChiTiet) {
                 String tenSP = tenSanPhamMap.getOrDefault(ct.getMaSanPham(), "Không xác định");
-                tableModel.addRow(new Object[] {
+                tableModel.addRow(new Object[]{
                         ct.getMaSanPham(),
                         tenSP,
                         ct.getSoLuong(),
@@ -540,6 +533,7 @@ public class CapNhatTT_HD extends BasePanel {
     }
 
     private void luuHoaDon() {
+        // Validate dữ liệu cơ bản
         String maKH = txtMaKH.getText().trim();
         String maNV = txtMaNV.getText().trim();
         Date ngayLap = dateChooserNgay.getDate();
@@ -566,8 +560,7 @@ public class CapNhatTT_HD extends BasePanel {
             String giaStr = tableModel.getValueAt(i, 3).toString().trim();
 
             if (maSP.isEmpty() || slStr.isEmpty() || giaStr.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin chi tiết!", "Lỗi",
-                        JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin chi tiết!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -576,15 +569,13 @@ public class CapNhatTT_HD extends BasePanel {
                 double donGia = Double.parseDouble(giaStr);
 
                 if (soLuong <= 0 || donGia <= 0) {
-                    JOptionPane.showMessageDialog(this, "Số lượng và đơn giá phải lớn hơn 0!", "Lỗi",
-                            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Số lượng và đơn giá phải lớn hơn 0!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
                 danhSachChiTiet.add(new ChiTietHoaDonDTO(maHD, maSP, soLuong, donGia));
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Số lượng và đơn giá phải là số!", "Lỗi",
-                        JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Số lượng và đơn giá phải là số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -594,10 +585,8 @@ public class CapNhatTT_HD extends BasePanel {
             return;
         }
 
-        // Tạo DTO và cập nhật
         HoaDonDTO hd = new HoaDonDTO(maHD, maNV, maKH.isEmpty() ? null : maKH, ngayLap);
 
-        // Tính tổng tiền trước khi lưu
         double tongTien = 0;
         for (ChiTietHoaDonDTO ct : danhSachChiTiet) {
             tongTien += ct.getSoLuong() * ct.getGia();
@@ -605,12 +594,10 @@ public class CapNhatTT_HD extends BasePanel {
         hd.setThanhTien(tongTien);
 
         if (hdBLL.capNhatHoaDonVoiChiTiet(hd, danhSachChiTiet)) {
-            JOptionPane.showMessageDialog(this, "Cập nhật hóa đơn thành công!", "Thông báo",
-                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Cập nhật hóa đơn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             onUpdateSuccess();
         } else {
-            JOptionPane.showMessageDialog(this, "Cập nhật hóa đơn thất bại! Vui lòng kiểm tra log hệ thống.", "Lỗi",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Cập nhật hóa đơn thất bại! Vui lòng kiểm tra log hệ thống.", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
 
