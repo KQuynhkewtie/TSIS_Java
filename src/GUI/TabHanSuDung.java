@@ -38,6 +38,7 @@ public class TabHanSuDung extends JPanel {
         panelFilter.add(new JLabel("Hạn sử dụng còn lại:"));
         cbExpiryFilter = new JComboBox<>(new String[] {
                 "Tất cả",
+                "Còn hạn",
                 "Đã hết hạn",
                 "7 ngày tới",
                 "30 ngày tới",
