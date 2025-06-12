@@ -108,7 +108,7 @@ public class CapNhatTT_KH extends BasePanel {
         txtDiemTL.setFocusable(false);
         txtDiemTL.setBackground(new Color(230, 230, 230));
 
-        JLabel lblLoaiKH = new JLabel("Mã loại khách hàng:");
+        JLabel lblLoaiKH = new JLabel("Loại khách hàng:");
         lblLoaiKH.setBounds(20, 330, 150, 30);
         add(lblLoaiKH);
         txtLoaiKH = new JTextField();

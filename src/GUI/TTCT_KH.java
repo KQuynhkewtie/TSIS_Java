@@ -108,7 +108,7 @@ public class TTCT_KH extends BasePanel {
 		txtDiemTL.setOpaque(false);
 		add(txtDiemTL);
 
-		JLabel lblLoaiKH = new JLabel("Mã loại khách hàng:");
+		JLabel lblLoaiKH = new JLabel("Loại khách hàng:");
 		lblLoaiKH.setBounds(20, 330, 150, 30);
 		add(lblLoaiKH);
 		txtLoaiKH = new JTextArea();

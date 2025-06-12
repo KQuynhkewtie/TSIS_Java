@@ -98,7 +98,7 @@ public class Them_KH extends BasePanel {
         add(txtLoaiKH);
 
         JButton btnLuu = new JButton("Lưu");
-        btnLuu.setBounds(200, 330, 100, 30);
+        btnLuu.setBounds(450, 480, 100, 40);
         btnLuu.setBackground(Color.decode("#F0483E"));
         btnLuu.setForeground(Color.WHITE);
         add(btnLuu);

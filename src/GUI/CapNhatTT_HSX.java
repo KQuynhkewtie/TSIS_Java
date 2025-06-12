@@ -122,6 +122,7 @@ public class CapNhatTT_HSX extends BasePanel {
         groupTrangThai.add(rbSD);
         groupTrangThai.add(rbNSD);
 
+        // Nút Lưu
         JButton btnLuusua = new JButton("Lưu");
         btnLuusua.setBounds(460, 490, 100, 40);
         btnLuusua.setBackground(Color.decode("#F0483E"));

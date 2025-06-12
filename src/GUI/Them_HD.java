@@ -583,6 +583,7 @@ public class Them_HD extends BasePanel {
                             "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
             }
+            mainFrame.showPage("hoadon");
         }
     }
 

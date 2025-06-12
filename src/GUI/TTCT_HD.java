@@ -333,7 +333,10 @@ public class TTCT_HD extends BasePanel {
                     .collect(Collectors.toList());
             Map<String, String> tenSanPhamMap = hdBLL.layDanhSachTenSanPham(danhSachMaSP);
 
-            KhachHangDTO kh = khBLL.getKhachHangById(hd.getMaKH().trim());
+            KhachHangDTO kh = null;
+            if (hd.getMaKH() != null && !hd.getMaKH().trim().isEmpty()) {
+                kh = khBLL.getKhachHangById(hd.getMaKH().trim());
+            }
             NhanVienDTO nv = nvBLL.getNhanVienByID(hd.getMaNhanVien().trim());
 
             new PDFGeneratorHD().exportHoaDonToPDF((JFrame)SwingUtilities.getWindowAncestor(this), hd, chiTiet, tenSanPhamMap, nv, kh);
